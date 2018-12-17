@@ -1,0 +1,56 @@
+#' Assign species to mz values
+#'
+#' @param peak_df 
+#' @param mzlist 
+#' @param subset.col 
+#' @param tol 
+#' @param species.col 
+#' @param mz.col 
+#' @param append 
+#'
+#' @return df with assigned peaks if append is TRUE
+#' @export
+assign_species <- function(peak_df, mzlist, 
+                           subsetcol = "Substrate",
+                           tol = 5,  
+                           speciescol = "Species", 
+                           mzcol = "mz", 
+                           append = TRUE) {
+  
+  mzlist <- tibble::as.tibble(mzlist)
+  peak_df <- tibble::as.tibble(peak_df)
+  subsets <- unique(dplyr::pull(peak_df,subsetcol))
+  
+  res_df <- c()
+  for(sub in subsets) {
+    fmzlist <- mzlist[mzlist[,subsetcol] == sub,]
+    fpeak_df <- peak_df[peak_df[,subsetcol] == sub,]
+    
+    for(i in 1:dim(fpeak_df[, mzcol])[1]) {                # i index in fpeak_df, c_idx index in fmzlist
+      mz <- fpeak_df[[i, mzcol]]
+      closest_idx <-  AlzTools::getClosest(fmzlist[,mzcol], mz)
+      closest_mz <- dplyr::pull(fmzlist, mzcol)[closest_idx]
+      
+      if(closest_mz > mz - tol & closest_mz < mz + tol) {
+        for(c_idx in closest_idx) {
+          fpeak_df[i, "species"] <- paste(pull(fmzlist, speciescol)[closest_idx], collapse = ", ")
+          #fpeak_df[c_idx, "species.substrate"] <- fmzlist[i, subset.col]
+          fpeak_df[i, "mz.theo"] <- fmzlist[c_idx, mzcol]
+          fpeak_df[i, "mz.diff"] <- round(abs(fmzlist[c_idx,mzcol] - mz),1)
+          fpeak_df[i, "mz.diff.ppm"] <- round(abs(fmzlist[c_idx,mzcol] - mz)/mz*10^6,1)
+        }
+      }
+      
+    }
+    res_df <- rbind(res_df, fpeak_df)
+    
+  } 
+  
+  
+  
+  if(append) {
+    return(res_df)
+  } else {
+    return(res_df[,c("species","mz.theo","mz.diff","mz.diff.ppm")])
+  }
+}

@@ -7,6 +7,8 @@
 #'
 #' @return list of MALDIquant spectra
 #' @export
+#' 
+#' @importFrom svMisc progress
 load_spectra <- function(Dir = parentDir, filter = c("Cal", "cal", "CAL"), nameSpectra = TRUE) {
   
   

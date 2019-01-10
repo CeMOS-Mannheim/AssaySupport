@@ -23,11 +23,21 @@ write_peak_list <-function(labels_df = label_df,
 #' @export
 write_msd <- function(spectra = spectra_align, 
                       parentDir = parentDir, 
-                      namePrefix = namePrefix) {
+                      namePrefix = namePrefix,
+                      peaks = peaks) {
   cat("\n", AlzTools::timeNowHM(), "Writing avg spectra to disk...\n")
   # export spectra
   for(i in 1:length(spectra_align)) {
     nm <- unique(paste0(names(spectra)))
-    MALDIquantForeign::exportMsd(spectra_align[[i]], file = paste0(parentDir, namePrefix, "_", nm[i], "_avg.msd"), force = TRUE)
+    if(!is.na(peaks[1])) {
+      MALDIquantForeign::exportMsd(x = spectra_align[[i]], 
+                                   peaks = peaks[[i]], 
+                                   file = paste0(parentDir, namePrefix, "_", nm[i], "_avg.msd"), 
+                                   force = TRUE)
+    } else {
+      MALDIquantForeign::exportMsd(x = spectra_align[[i]], 
+                                   file = paste0(parentDir, namePrefix, "_", nm[i], "_avg.msd"), 
+                                   force = TRUE)
+    }
   }
 }

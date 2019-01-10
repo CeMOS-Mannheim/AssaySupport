@@ -1,7 +1,7 @@
 #' get max value of df subsetted by x
 #'
-#' @param labels_df 
-#' @param x 
+#' @param labels_df labels 
+#' @param x subseting value
 #'
 #' @return max value
 get_max <- function(labels_df,
@@ -12,12 +12,12 @@ get_max <- function(labels_df,
 
 #' Overview using ggplot
 #'
-#' @param spec_ID 
-#' @param n_overlay 
-#' @param labels_df 
-#' @param specs 
-#' @param ab_max 
-#' @param aicd_max 
+#' @param spec_ID ID
+#' @param n_overlay number of spectra 
+#' @param labels_df df with labels
+#' @param specs spectra
+#' @param ab_max max value for abeta region
+#' @param aicd_max max value for aicd region
 #' @importFrom magrittr %>%
 #'
 #' @return ggplot
@@ -93,14 +93,14 @@ ggoverview <- function(spec_ID,
 
 #' Plot spectrum with ggplot
 #'
-#' @param spec_ID 
-#' @param labels_df 
-#' @param specs 
-#' @param xlim 
-#' @param n_overlay 
-#' @param showLabel 
-#' @param normalizing 
-#' @param tol 
+#' @param spec_ID ID
+#' @param labels_df df with labels
+#' @param specs spectra 
+#' @param xlim limits
+#' @param n_overlay n
+#' @param showLabel logical
+#' @param normalizing logical
+#' @param tol tolerance
 #' @importFrom magrittr %>%
 #'
 #' @return ggplot
@@ -210,17 +210,17 @@ ggoverlay_spectra <- function(spec_ID,
 
 #' Overview using base R graphics
 #'
-#' @param idx 
-#' @param specs 
-#' @param labeldf 
-#' @param total_xlim 
-#' @param AICD_xlim 
-#' @param Ab_xlim 
-#' @param subst_xlim 
-#' @param offset 
-#' @param ymax_label 
-#' @param ymax_adjust 
-#' @param overview_adjust 
+#' @param idx index
+#' @param specs spectra
+#' @param labeldf df with labels
+#' @param total_xlim limits
+#' @param AICD_xlim limits
+#' @param Ab_xlim limits
+#' @param subst_xlim limits
+#' @param offset offset
+#' @param ymax_label n
+#' @param ymax_adjust n
+#' @param overview_adjust n
 #'
 #' @return plot
 #' @export
@@ -259,13 +259,13 @@ overviewplot <- function(idx,
 
 #' Plot comparing different mutations using base R graphics
 #'
-#' @param idx 
-#' @param plot_n 
-#' @param specs 
-#' @param labeldf 
-#' @param Ab_xlim 
-#' @param ymax_label 
-#' @param ymax_adjust 
+#' @param idx n
+#' @param plot_n n
+#' @param specs n
+#' @param labeldf n
+#' @param Ab_xlim n
+#' @param ymax_label n
+#' @param ymax_adjust n
 #'
 #' @return plot
 #' @export

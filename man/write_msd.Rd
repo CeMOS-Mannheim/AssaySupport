@@ -5,14 +5,21 @@
 \title{write spectra as MSD to disk}
 \usage{
 write_msd(spectra = spectra_align, parentDir = parentDir,
-  namePrefix = namePrefix)
+  spectraNames = unique(paste0(names(spectra))),
+  namePrefix = namePrefix, peaks = peaks, annotation_df = NA)
 }
 \arguments{
-\item{spectra}{}
+\item{spectra}{List or single \code{MALDIquant::MassSpectrum}, spectra to export.}
 
-\item{parentDir}{}
+\item{parentDir}{Character, folder to write spectra}
 
-\item{namePrefix}{}
+\item{spectraNames}{Character vector, names of spectra by default the \code{spectra} are expected to be named.}
+
+\item{namePrefix}{Character, prefix to add to filenames}
+
+\item{peaks}{List or single \code{MALDIquant::MassPeaks}, peaks to be added to msd file. Set to NA if no peaks should be added.}
+
+\item{annotation_df}{data.frame containing assigned species. Must contain columns: "species", "mz.theo", "plotIdx", "int", "mz"}
 }
 \description{
 write spectra as MSD to disk

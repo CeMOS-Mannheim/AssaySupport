@@ -1,10 +1,10 @@
 #' generate peak static data.frame
 #'
-#' @param spectra 
-#' @param pick_meth 
-#' @param SNR 
-#' @param halfWindowSize 
-#' @param binpeaks 
+#' @param spectra spectra
+#' @param pick_meth peak picking method
+#' @param SNR SNR value
+#' @param halfWindowSize halfWindowSize
+#' @param binpeaks logical, bin peaks?
 #'
 #' @return df containing peak statistics
 #' @export
@@ -14,7 +14,7 @@ generate_peakdf <- function(spectra, pick_meth = "SuperSmoother", halfWindowSize
   
   
   peaks <- MALDIquant::detectPeaks(spectra, method = pick_meth, SNR = SNR, halfWindowSize = halfWindowSize)
-  if(isMassSpectrum(spectra)) {
+  if(MALDIquant::isMassSpectrum(spectra)) {
     spectra <- list(spectra)
     peaks <- list(peaks)
   }

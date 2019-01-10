@@ -1,12 +1,12 @@
 #' Assign species to mz values
 #'
-#' @param peak_df 
-#' @param mzlist 
-#' @param subset.col 
-#' @param tol 
-#' @param species.col 
-#' @param mz.col 
-#' @param append 
+#' @param peak_df n
+#' @param mzlist n
+#' @param subset.col n
+#' @param tol n
+#' @param species.col n
+#' @param mz.col n
+#' @param append n
 #'
 #' @return df with assigned peaks if append is TRUE
 #' @export

@@ -7,9 +7,9 @@
 get_max(labels_df, x)
 }
 \arguments{
-\item{labels_df}{}
+\item{labels_df}{labels}
 
-\item{x}{}
+\item{x}{subseting value}
 }
 \value{
 max value

@@ -11,17 +11,17 @@ ggoverview(spec_ID, n_overlay, labels_df = label_df,
   aicd_xlim = c(9400, 10000), substr_xlim = c(14500, 15500))
 }
 \arguments{
-\item{spec_ID}{}
+\item{spec_ID}{ID}
 
-\item{n_overlay}{}
+\item{n_overlay}{number of spectra}
 
-\item{labels_df}{}
+\item{labels_df}{df with labels}
 
-\item{specs}{}
+\item{specs}{spectra}
 
-\item{ab_max}{}
+\item{ab_max}{max value for abeta region}
 
-\item{aicd_max}{}
+\item{aicd_max}{max value for aicd region}
 }
 \value{
 ggplot

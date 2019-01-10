@@ -1,11 +1,11 @@
 #' Preprocess spectra
 #'
-#' @param spectra 
-#' @param smooth_meth 
-#' @param smooth_halfWindowSize 
-#' @param norm_meth 
-#' @param filter_spectra 
-#' @param baseline_meth 
+#' @param spectra spectra
+#' @param smooth_meth smoothing method
+#' @param smooth_halfWindowSize n
+#' @param norm_meth n
+#' @param filter_spectra n 
+#' @param baseline_meth n
 #'
 #' @return preprocessed spectra
 #' @export

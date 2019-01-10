@@ -9,19 +9,19 @@ mutation_plot(idx, plot_n = 4, specs = spectra_align,
   ymax_adjust = 1.7)
 }
 \arguments{
-\item{idx}{}
+\item{idx}{n}
 
-\item{plot_n}{}
+\item{plot_n}{n}
 
-\item{specs}{}
+\item{specs}{n}
 
-\item{labeldf}{}
+\item{labeldf}{n}
 
-\item{Ab_xlim}{}
+\item{Ab_xlim}{n}
 
-\item{ymax_label}{}
+\item{ymax_label}{n}
 
-\item{ymax_adjust}{}
+\item{ymax_adjust}{n}
 }
 \value{
 plot

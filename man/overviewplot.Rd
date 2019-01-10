@@ -11,27 +11,27 @@ overviewplot(idx, specs = spectra_align, labeldf = label_df,
   overview_adjust = 5)
 }
 \arguments{
-\item{idx}{}
+\item{idx}{index}
 
-\item{specs}{}
+\item{specs}{spectra}
 
-\item{labeldf}{}
+\item{labeldf}{df with labels}
 
-\item{total_xlim}{}
+\item{total_xlim}{limits}
 
-\item{AICD_xlim}{}
+\item{AICD_xlim}{limits}
 
-\item{Ab_xlim}{}
+\item{Ab_xlim}{limits}
 
-\item{subst_xlim}{}
+\item{subst_xlim}{limits}
 
-\item{offset}{}
+\item{offset}{offset}
 
-\item{ymax_label}{}
+\item{ymax_label}{n}
 
-\item{ymax_adjust}{}
+\item{ymax_adjust}{n}
 
-\item{overview_adjust}{}
+\item{overview_adjust}{n}
 }
 \value{
 plot

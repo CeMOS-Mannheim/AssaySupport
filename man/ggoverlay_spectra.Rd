@@ -9,21 +9,21 @@ ggoverlay_spectra(spec_ID, labels_df = label_df, specs = spectra_align,
   normalizing = "max", tol = 3)
 }
 \arguments{
-\item{spec_ID}{}
+\item{spec_ID}{ID}
 
-\item{labels_df}{}
+\item{labels_df}{df with labels}
 
-\item{specs}{}
+\item{specs}{spectra}
 
-\item{xlim}{}
+\item{xlim}{limits}
 
-\item{n_overlay}{}
+\item{n_overlay}{n}
 
-\item{showLabel}{}
+\item{showLabel}{logical}
 
-\item{normalizing}{}
+\item{normalizing}{logical}
 
-\item{tol}{}
+\item{tol}{tolerance}
 }
 \value{
 ggplot

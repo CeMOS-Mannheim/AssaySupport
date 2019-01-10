@@ -10,17 +10,17 @@ preprocess_spectra(spec = spectra, smooth_meth = "SavitzkyGolay",
   align = FALSE)
 }
 \arguments{
-\item{smooth_meth}{}
+\item{smooth_meth}{smoothing method}
 
-\item{smooth_halfWindowSize}{}
+\item{smooth_halfWindowSize}{n}
 
-\item{norm_meth}{}
+\item{norm_meth}{n}
 
-\item{filter_spectra}{}
+\item{filter_spectra}{n}
 
-\item{baseline_meth}{}
+\item{baseline_meth}{n}
 
-\item{spectra}{}
+\item{spectra}{spectra}
 }
 \value{
 preprocessed spectra

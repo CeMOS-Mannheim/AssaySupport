@@ -8,11 +8,11 @@ write_peak_list(labels_df = label_df, parentDir = parentDir,
   namePrefix = namePrefix)
 }
 \arguments{
-\item{labels_df}{}
+\item{labels_df}{n}
 
-\item{parentDir}{}
+\item{parentDir}{n}
 
-\item{namePrefix}{}
+\item{namePrefix}{n}
 }
 \description{
 write peak statistics as xlsx file to disk

@@ -8,15 +8,15 @@ generate_peakdf(spectra, pick_meth = "SuperSmoother",
   halfWindowSize = 10, SNR = 3, binpeaks = FALSE)
 }
 \arguments{
-\item{spectra}{}
+\item{spectra}{spectra}
 
-\item{pick_meth}{}
+\item{pick_meth}{peak picking method}
 
-\item{halfWindowSize}{}
+\item{halfWindowSize}{halfWindowSize}
 
-\item{SNR}{}
+\item{SNR}{SNR value}
 
-\item{binpeaks}{}
+\item{binpeaks}{logical, bin peaks?}
 }
 \value{
 df containing peak statistics

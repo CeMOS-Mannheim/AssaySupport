@@ -53,9 +53,13 @@ write_msd <- function(spectra = spectra_align,
     if(is.data.frame(annotation_df) ){
       current_df <- annotation_df %>%
                       dplyr::ungroup() %>%
-                      dplyr::filter(plotIdx == i) %>%
+                      dplyr::filter(plotIdx == i, !is.na(species)) %>%
                       dplyr::select(species, mz.theo, int, mz)
                     
+      if(nrow(current_df < 1)) {
+        warning("No labels found for file", current_file, "\n")
+        next()
+      }
       for(j in 1:nrow(current_df))
       annotate_msd_peak(file = current_file, 
                         label = current_df[j, "species"] %>% dplyr::pull(), 

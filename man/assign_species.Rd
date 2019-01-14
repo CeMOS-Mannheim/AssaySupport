@@ -8,19 +8,19 @@ assign_species(peak_df, mzlist, subsetcol = "Substrate", tol = 5,
   speciescol = "Species", mzcol = "mz", append = TRUE)
 }
 \arguments{
-\item{peak_df}{}
+\item{peak_df}{n}
 
-\item{mzlist}{}
+\item{mzlist}{n}
 
-\item{tol}{}
+\item{tol}{n}
 
-\item{append}{}
+\item{append}{n}
 
-\item{subset.col}{}
+\item{subset.col}{n}
 
-\item{species.col}{}
+\item{species.col}{n}
 
-\item{mz.col}{}
+\item{mz.col}{n}
 }
 \value{
 df with assigned peaks if append is TRUE

@@ -1,13 +1,16 @@
-#' generate peak static data.frame
+#' generate peak statistic data.frame
 #'
-#' @param spectra spectra
-#' @param pick_meth peak picking method
-#' @param SNR SNR value
-#' @param halfWindowSize halfWindowSize
-#' @param binpeaks logical, bin peaks?
+#' @param spectra        \code{MALDIquant::MassSpectrum}
+#' @param pick_meth      Character, peak picking method
+#' @param SNR            numeric, SNR value
+#' @param halfWindowSize Integer, halfWindowSize
+#' @param binpeaks       Logical, perform binning
 #'
-#' @return df containing peak statistics
+#' @return data.frame containing peak statistics
 #' @export
+#' 
+#' @examples 
+#' head(generate_peakdf(test_spectra_proc))
 
 generate_peakdf <- function(spectra, pick_meth = "SuperSmoother", halfWindowSize = 10, SNR = 3, binpeaks = FALSE) {
   

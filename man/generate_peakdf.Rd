@@ -2,25 +2,28 @@
 % Please edit documentation in R/generate_peakdf.R
 \name{generate_peakdf}
 \alias{generate_peakdf}
-\title{generate peak static data.frame}
+\title{generate peak statistic data.frame}
 \usage{
 generate_peakdf(spectra, pick_meth = "SuperSmoother",
   halfWindowSize = 10, SNR = 3, binpeaks = FALSE)
 }
 \arguments{
-\item{spectra}{spectra}
+\item{spectra}{\code{MALDIquant::MassSpectrum}}
 
-\item{pick_meth}{peak picking method}
+\item{pick_meth}{Character, peak picking method}
 
-\item{halfWindowSize}{halfWindowSize}
+\item{halfWindowSize}{Integer, halfWindowSize}
 
-\item{SNR}{SNR value}
+\item{SNR}{numeric, SNR value}
 
-\item{binpeaks}{logical, bin peaks?}
+\item{binpeaks}{Logical, perform binning}
 }
 \value{
-df containing peak statistics
+data.frame containing peak statistics
 }
 \description{
-generate peak static data.frame
+generate peak statistic data.frame
+}
+\examples{
+head(generate_peakdf(test_spectra_proc))
 }

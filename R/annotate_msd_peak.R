@@ -1,11 +1,11 @@
 #' Annotate peaks in MSD files
 #'
-#' @param label Character, label of the peak
-#' @param file  Character, filepath to edit
-#' @param peaks  a \code{MALDIquant::MassPeaks} object with corresponding peaks to file or a vector in form c(mz, intensity)
-#' @param peakIdx Integer, index of peak in \code{peaks} or NA if mz and intensity are given directly
-#' @param theoMz Numeric, theoretical mass of labeled peak (defaults to 0)
-#' @param charge Integer, charge of peak (defaults to 1)
+#' @param label        Character, label of the peak
+#' @param file         Character, filepath to edit
+#' @param peaks        \code{MALDIquant::MassPeaks}, with corresponding peaks to file or a vector in form c(mz, intensity)
+#' @param peakIdx      Integer, index of peak in \code{peaks} or NA if mz and intensity are given directly
+#' @param theoMz       Numeric, theoretical mass of labeled peak (defaults to 0)
+#' @param charge       Integer, charge of peak (defaults to 1)
 #' @param peakBaseline Numeric, intensity of baseline at peak position (not really sure what it does... defaults to 0)
 #'
 #' @return
@@ -23,7 +23,7 @@ annotate_msd_peak <- function(label, file, peaks, peakIdx = NA, theoMz = 0, char
     return(anno)
   }
   
-  xml_doc <- xml2::read_xml(file, options = "")
+  xml_doc <- xml2::read_xml(file, options = "NOBLANKS")
   
   # get index of annotations node, create it if not found
   anno_idx <- which(xml2::xml_name(xml2::xml_children(xml_doc)) == "annotations")
@@ -52,6 +52,6 @@ annotate_msd_peak <- function(label, file, peaks, peakIdx = NA, theoMz = 0, char
   
   xml2::xml_add_child(xml2::xml_children(xml_doc)[[anno_idx]], .value = xml2::read_xml(anno))
   
-  xml2::write_xml(xml_doc, file =file, encoding = "utf-8", options = "")
+  xml2::write_xml(xml_doc, file =file, encoding = "utf-8", options = "format")
 }
 

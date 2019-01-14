@@ -3,6 +3,7 @@
 export(annotate_msd_peak)
 export(assign_species)
 export(generate_peakdf)
+export(generate_resultdf)
 export(ggoverlay_spectra)
 export(ggoverview)
 export(load_spectra)

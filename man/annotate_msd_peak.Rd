@@ -12,7 +12,7 @@ annotate_msd_peak(label, file, peaks, peakIdx = NA, theoMz = 0,
 
 \item{file}{Character, filepath to edit}
 
-\item{peaks}{a \code{MALDIquant::MassPeaks} object with corresponding peaks to file or a vector in form c(mz, intensity)}
+\item{peaks}{\code{MALDIquant::MassPeaks}, with corresponding peaks to file or a vector in form c(mz, intensity)}
 
 \item{peakIdx}{Integer, index of peak in \code{peaks} or NA if mz and intensity are given directly}
 

@@ -1,0 +1,203 @@
+##TITLE=  XMASS Parameter file
+##JCAMPDX=  5.0
+##DATATYPE=  CONTINUOUS MASS SPECTRUM
+##ORIGIN=  XMASS, Bruker-Daltonics (USA) and Bruker-Daltonik (GER)
+##OWNER=  TOF User
+##SPECTROMETER/DATASYSTEM=  Bruker Flex Series
+##.SPECTROMETER TYPE=  TOF
+##.INLET=  DIRECT
+##.IONIZATION MODE=  LD+
+##$ABSF1= 10 
+##$ABSF2= 0 
+##$ABSG= 5 
+##$ABSL= 3 
+##$AQOP_m= 0 
+##$ATTEN= 30 
+##$AUTOLAB= 0 
+##$AZFE= 0.1 
+##$AZFW= 0.5 
+##$AccE_is= 0 
+##$Ame= 0 
+##$BASLSEG= 10 
+##$BASLSUB= no 
+##$BC_mod= 0 
+##$BYTORDP= 0 
+##$CLPTS= 0 
+##$CLSTAT= 0 
+##$CalPrnt= 0 
+##$DATMOD= 1 
+##$DC= 1 
+##$DELAY= 26314 
+##$DTATYPE= 0 
+##$Dy2max= 40 
+##$FILNO= 0 
+##$FT_mod= 0 
+##$FWidth= 0.75 
+##$GB= 0.1 
+##$GOODNLV= 0 
+##$HPCon= no 
+##$INTBC= 1 
+##$INTSCL= 1 
+##$ISEN= 128 
+##$LB= 1 
+##$LINDIS= 0 
+##$LftBHi= 0 
+##$LftBLo= 0 
+##$LftOrd= 0 
+##$Lms2osp= no 
+##$MAXI= 10000 
+##$MAXPKS= 200 
+##$MC2= 4 
+##$MEAN= 0 
+##$MI= 0 
+##$MPWCH= 1000 
+##$MPWM= 1000 
+##$MSDTAID= -1 
+##$NC_proc= 0 
+##$NOISE= 0 
+##$NSP= 1 
+##$NTH_PF= 0 
+##$NTH_PI= 0 
+##$NZP= 0 
+##$OCPOrd= 0 
+##$PC= 4 
+##$PHC0= 0 
+##$PHC1= 0 
+##$PH_mod= 0 
+##$POLARI= 1 
+##$PPERC= 80 
+##$PP_meth= 1 
+##$PSDOrd= 0 
+##$PULSREP= 10000 
+##$Parent= 1000 
+##$PsdHi= 1.05 
+##$PsdLo= 0.85000002 
+##$Psdc0= 0 
+##$Psdc1= 0 
+##$Psdc2= 0 
+##$REPHZ= 10000 
+##$REVERSE= no 
+##$RefFull= 0 
+##$ReflE= 0 
+##$RmFrag= yes 
+##$SAMPNO= 0 
+##$SCALINT= 1 
+##$SCALSPC= 1 
+##$SI= 37311 
+##$SIC_gco= 0 
+##$SIC_gct= 0 
+##$SIC_ion= 0 
+##$SIC_max= 0 
+##$SIC_min= 0 
+##$SMONUM= 0 
+##$SPCOrd= 0 
+##$SPOTID= -1 
+##$SSB= 0 
+##$STSI= 0 
+##$STSR= 0 
+##$SYMM= 0 
+##$S_DEV= 0 
+##$Sens1= 100 
+##$Sens2= 0 
+##$Subbasl= no 
+##$Subbpar= 0.80000001 
+##$SumShot= 0 
+##$T1D= 5 
+##$TDeff= 0 
+##$TIC_gco= 0 
+##$TIC_gct= 0 
+##$TIC_hig= 0 
+##$TIC_low= 0 
+##$TIC_max= 0 
+##$TIC_min= 0 
+##$TIC_rhi= 1 
+##$TIC_rlo= 1 
+##$TICcorr= 2 
+##$TM1= 0.1 
+##$TM2= 0.89999998 
+##$Udefl= 0 
+##$UdetL= 0.623888427734375 
+##$UdetR= 0 
+##$Uhimass= 0 
+##$Uis1= 20 
+##$Uis2= 18.629999 
+##$Ulens= 2.5 
+##$Uref_is= 0 
+##$WDW= 1 
+##$XDIM= 64 
+##$YMAX_p= 722624 
+##$YMIN_p= -2147483648 
+##$AUNMP= <> 
+##$Acalm= <> 
+##$Acquver= <AIDA6.0.0.7> 
+##$BLDNM= <averagine.bld> 
+##$BTMeth= <> 
+##$CALME= (0..15) 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+##$CALMR= (0..15) 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+##$CALNAM1= <> 
+##$CALNAM2= <> 
+##$CALNAM3= <> 
+##$CALNAM4= <> 
+##$CALNAM5= <> 
+##$CALNAM6= <> 
+##$CALNAM7= <> 
+##$CLDATE= <2018-12-17T12:27:59+01:00> 
+##$CLREFNM= <> 
+##$CMT1= <> 
+##$CMT2= <> 
+##$COMFILE= <TofComment> 
+##$CalStat= <<?xml version="1.0" encoding="UTF-8"?><cs version="1.0"><ca>ReferenceMassAssignement</ca><cm>Quadratic</cm><cd>2018-12-17T12:27:59+01:00</cd><cr>OK</cr><pn>flexControl</pn><pv>2.1.42.0</pv><un>tof-user</un><mcl>Abeta Standard Mix_pep_prot</mcl><cocp>12</cocp><devb>584.69456</devb><deca>120.3684</deca><acs><ac><rv>39548.117</rv><mb>4133.0844</mb><ma>4130.9236</ma><cm>4131.548</cm><cn>1-38</cn><me>151.14</me><tol>0</tol></ac><ac><rv>40254.691</rv><mb>4284.8163</mb><ma>4282.6388</ma><cm>4283.38</cm><cn/><me>173.04</me><tol>0</tol></ac><ac><rv>40470.511</rv><mb>4331.7105</mb><ma>4329.5272</ma><cm>4329.811</cm><cn>1-40</cn><me>65.547</me><tol>0</tol></ac><ac><rv>41309.643</rv><mb>4516.4794</mb><ma>4514.27</ma><cm>4514.047</cm><cn>1-42</cn><me>49.399</me><tol>0</tol></ac><ac><rv>41762.921</rv><mb>4617.9012</mb><ma>4615.6752</ma><cm>4615.151</cm><cn>1-43</cn><me>113.58</me><tol>0</tol></ac><ac><rv>42696.407</rv><mb>4830.3392</mb><ma>4828.0736</ma><cm>4827.44</cm><cn>1-45</cn><me>131.24</me><tol>0</tol></ac><ac><rv>43126.821</rv><mb>4929.9092</mb><ma>4927.6226</ma><cm>4926.571</cm><cn>1-46</cn><me>213.45</me><tol>0</tol></ac><ac><rv>46462.592</rv><mb>5736.2554</mb><ma>5733.7419</ma><cm>5734.52</cm><cn>Insulin_[M+H]+_avg</cn><me>135.7</me><tol>0</tol></ac><ac><rv>48213.471</rv><mb>6184.0826</mb><ma>6181.3987</ma><cm>6181.05</cm><cn>Cytochrome_C_[M+2H]2+_avg</cn><me>56.415</me><tol>0</tol></ac><ac><rv>56617.525</rv><mb>8569.7118</mb><ma>8565.5852</ma><cm>8565.76</cm><cn>Ubiquitin_I_[M+H]+_avg</cn><me>20.411</me><tol>0</tol></ac><ac><rv>67845.681</rv><mb>12368.673</mb><ma>12360.452</ma><cm>12360.97</cm><cn>Cytochrom_C_[M+H]+_avg</cn><me>41.885</me><tol>0</tol></ac><ac><rv>79300.715</rv><mb>16968.557</mb><ma>16952.649</ma><cm>16952.31</cm><cn>Myoglobin[M+H]+_avg</cn><me>20.017</me><tol>0</tol></ac></acs></cs>> 
+##$DFILT= <> 
+##$FAVer= <> 
+##$FUZFILE= <> 
+##$GENMETH= <> 
+##$ID= <af830be4-2bfd-4352-9979-4bb9553382c7> 
+##$IDref= <> 
+##$II_path= <> 
+##$IR_path= <> 
+##$LftCal= (0..15) 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+##$Mctrlp= <> 
+##$OpId= <tof-user> 
+##$PCRMETH= <> 
+##$PDELAY= (0..3) 
+10 10 10 10 
+##$PDURA= (0..3) 
+10 10 10 10 
+##$PEPURL= <pep_search> 
+##$PKFILE= <masslist> 
+##$PROCMAC= <> 
+##$PSDOCP= (0..15) 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+##$PSDSPC= (0..15) 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+##$PSmeth= <> 
+##$PostPr= <> 
+##$PsdList= <> 
+##$REFLIST= <> 
+##$RunGUID= <1304a0b4-013a-41e1-8ee3-623bbd8b8aac> 
+##$SEQMETH= <> 
+##$SMOPTS= (0..15) 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+##$SMPNAM= <C99_DMSO_InhX\0_B3\1> 
+##$SNPMETH= <> 
+##$SREGLST= <RRRRRRRRRRRRRRR> 
+##$TI= <> 
+##$WEND= (0..3) 
+30000 30000 30000 30000 
+##$WINY= (0..3) 
+3 3 3 3 
+##$WSTART= (0..3) 
+0 0 0 0 
+##$XMACRO= <> 
+##$Xml2= <> 
+##END=
+

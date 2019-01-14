@@ -1,13 +1,13 @@
 #' Preprocess spectra
 #'
-#' @param spectra spectra
-#' @param smooth_meth smoothing method
-#' @param smooth_halfWindowSize n
-#' @param norm_meth n
-#' @param filter_spectra n 
-#' @param baseline_meth n
+#' @param spectra               List of \code{MALDIquant::MassSpectrum}
+#' @param smooth_meth           Character, smoothing method see \code{MALDIquant::smoothIntensity()}
+#' @param smooth_halfWindowSize Numeric, halfWindowSize for smoothing method see \code{MALDIquant::smoothIntensity()}
+#' @param norm_meth             Character, normalization method see \code{MALDIquant::calibrateIntensity()}
+#' @param filter_spectra        Character vector, regex of patterns to exclude spectra (like calibration spectra in same folder)
+#' @param baseline_meth         Character, baseline removal method see \code{MALDIquant::removeBaseline}
 #'
-#' @return preprocessed spectra
+#' @return List of preprocessed \code{MALDIquant::MassSpectrum}
 #' @export
 preprocess_spectra <- function(spec = spectra, 
                                smooth_meth = "SavitzkyGolay",

@@ -1,15 +1,15 @@
 
 #' load spectra of the bruker flex format
 #'
-#' @param Dir string, directory containing spectra 
-#' @param filter character vector containing spectra names to be filtered
-#' @param nameSpectra name spectra according to there parent folder (default)
+#' @param Dir         Character, directory containing spectra 
+#' @param filter      Character vector containing spectra names to be filtered
+#' @param nameSpectra Logical, name spectra according to there parent folder (default)
 #'
 #' @return list of MALDIquant spectra
 #' @export
 #' 
 #' @importFrom svMisc progress
-load_spectra <- function(Dir = parentDir, filter = c("Cal", "cal", "CAL"), nameSpectra = TRUE) {
+load_spectra <- function(Dir, filter = c("Cal", "cal", "CAL"), nameSpectra = TRUE) {
   
   
   # get names of all anaylses

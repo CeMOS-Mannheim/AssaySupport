@@ -17,7 +17,9 @@
 #' @examples 
 #' head(generate_resultdf(test_peak_df, test_Ablist, tol = 5))
 
-generate_resultdf <- function(peak_df, speciesdf, tol, 
+generate_resultdf <- function(peak_df, 
+                              speciesdf, 
+                              tol, 
                               totalInt_varNames = c("Erb", "Neu", "Ab"), 
                               separateIdInto = c("Substrate", "Type", "Condition"),
                               sep = "_") {
@@ -26,8 +28,8 @@ generate_resultdf <- function(peak_df, speciesdf, tol,
     tidyr::separate(ID, 
                     into = separateIdInto, 
                     sep = sep) %>%
-    AssaySupport::assign_species(., 
-                                 speciesdf, 
+    AssaySupport::assign_species(peak_df = ., 
+                                 speciesdf = speciesdf, 
                                  tol = tol, 
                                  mzcol = "mz")
   

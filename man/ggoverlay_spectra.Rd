@@ -2,32 +2,36 @@
 % Please edit documentation in R/Plotting.R
 \name{ggoverlay_spectra}
 \alias{ggoverlay_spectra}
-\title{Plot spectrum with ggplot}
+\title{Plot spectrum with annotations}
 \usage{
 ggoverlay_spectra(spec_ID, labels_df = label_df, specs = spectra_align,
   xlim = c(4000, 5000), n_overlay = 3, showLabel = T,
-  normalizing = "max", tol = 3)
+  normalizing = NA, tol = 3)
 }
 \arguments{
-\item{spec_ID}{ID}
+\item{spec_ID}{Integer, ID spectrum to plot}
 
-\item{labels_df}{df with labels}
+\item{labels_df}{Data.frame, df with labels}
 
-\item{specs}{spectra}
+\item{specs}{\code{MALDIquant::MassSpectrum}}
 
-\item{xlim}{limits}
+\item{xlim}{Numeric vector, x-axis limits}
 
-\item{n_overlay}{n}
+\item{n_overlay}{Integer, number of spectra to plot (counting starts at \code{ID})}
 
-\item{showLabel}{logical}
+\item{showLabel}{Logical, show annotation in spectra}
 
-\item{normalizing}{logical}
+\item{normalizing}{Character or numeric, normalization to be applied to data. Useful to compare different plots.
+Options:
+  "NA"     No normalization
+  "max"    Set highest signal to 100%
+  numeric  Normalize to peak at \code{normalizing +- tol}}
 
-\item{tol}{tolerance}
+\item{tol}{Numeric, tolerance for normalization (if \code{normalizing} is numeric)}
 }
 \value{
 ggplot
 }
 \description{
-Plot spectrum with ggplot
+Plot spectrum with annotations
 }

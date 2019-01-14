@@ -4,15 +4,14 @@
 \alias{load_spectra}
 \title{load spectra of the bruker flex format}
 \usage{
-load_spectra(Dir = parentDir, filter = c("Cal", "cal", "CAL"),
-  nameSpectra = TRUE)
+load_spectra(Dir, filter = c("Cal", "cal", "CAL"), nameSpectra = TRUE)
 }
 \arguments{
-\item{Dir}{string, directory containing spectra}
+\item{Dir}{Character, directory containing spectra}
 
-\item{filter}{character vector containing spectra names to be filtered}
+\item{filter}{Character vector containing spectra names to be filtered}
 
-\item{nameSpectra}{name spectra according to there parent folder (default)}
+\item{nameSpectra}{Logical, name spectra according to there parent folder (default)}
 }
 \value{
 list of MALDIquant spectra

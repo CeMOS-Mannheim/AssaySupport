@@ -17,7 +17,7 @@ write_peak_list <-function(df,
 #' write spectra as MSD to disk
 #'
 #' @param spectra List or single \code{MALDIquant::MassSpectrum}, spectra to export.
-#' @param parentDir Character, folder to write spectra
+#' @param Dir Character, folder to write spectra
 #' @param namePrefix Character, prefix to add to filenames
 #' @param spectraNames Character vector, names of spectra by default the \code{spectra} are expected to be named.
 #' @param peaks List or single \code{MALDIquant::MassPeaks}, peaks to be added to msd file. Set to NA if no peaks should be added.
@@ -28,7 +28,7 @@ write_peak_list <-function(df,
 #'
 #' @export
 write_msd <- function(spectra = spectra_align, 
-                      parentDir = parentDir, 
+                      Dir = parentDir, 
                       spectraNames = unique(paste0(names(spectra))),
                       namePrefix = namePrefix,
                       peaks = peaks,
@@ -38,15 +38,15 @@ write_msd <- function(spectra = spectra_align,
   }
   cat("\n", AlzTools::timeNowHM(), "Writing avg spectra to disk...\n")
   # export spectra
-  for(i in 1:length(spectra_align)) {
-    current_file <- paste0(parentDir, namePrefix, "_", spectraNames[i], "_avg.msd")
+  for(i in 1:length(spectra)) {
+    current_file <- paste0(Dir, namePrefix, "_", spectraNames[i], "_avg.msd")
     if(!is.na(peaks[1])) {
-      MALDIquantForeign::exportMsd(x = spectra_align[[i]], 
+      MALDIquantForeign::exportMsd(x = spectra[[i]], 
                                    peaks = peaks[[i]], 
                                    file = current_file, 
                                    force = TRUE)
     } else {
-      MALDIquantForeign::exportMsd(x = spectra_align[[i]], 
+      MALDIquantForeign::exportMsd(x = spectra[[i]], 
                                    file = current_file, 
                                    force = TRUE)
     }

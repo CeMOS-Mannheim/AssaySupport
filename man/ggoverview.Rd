@@ -2,30 +2,38 @@
 % Please edit documentation in R/Plotting.R
 \name{ggoverview}
 \alias{ggoverview}
-\title{Overview using ggplot}
+\title{Overview of different conditions with annotations}
 \usage{
 ggoverview(spec_ID, n_overlay, labels_df = label_df,
   specs = spectra_align, ab_max = get_max(labels_df, "Ab"),
-  aicd_max = get_max(labels_df, "AICD"), label = "auto",
+  aicd_max = get_max(labels_df, "AICD"), title = "auto",
   total_xlim = c(3000, 16000), abeta_xlim = c(4000, 5000),
   aicd_xlim = c(9400, 10000), substr_xlim = c(14500, 15500))
 }
 \arguments{
-\item{spec_ID}{ID}
+\item{spec_ID}{Integer, ID of first spectrum}
 
-\item{n_overlay}{number of spectra}
+\item{n_overlay}{Integer, number of spectra to plot (counting starts at \code{ID})}
 
-\item{labels_df}{df with labels}
+\item{labels_df}{Data.frame, df with labels}
 
-\item{specs}{spectra}
+\item{specs}{\code{MALDIquant::MassSpectrum}}
 
-\item{ab_max}{max value for abeta region}
+\item{ab_max}{Numeric, max intensity value for abeta region}
 
-\item{aicd_max}{max value for aicd region}
+\item{aicd_max}{Numeric, max intensity value for aicd region}
+
+\item{title}{Character, title of plot. If set to "auto" it is generated automatically}
+
+\item{total_xlim}{Numeric vector, x-axis limits for total spectrum view}
+
+\item{abeta_xlim}{Numeric vector, x-axis limits for abeta spectrum view}
+
+\item{substr_xlim}{Numeric vector, x-axis limits for substrate spectrum view}
 }
 \value{
 ggplot
 }
 \description{
-Overview using ggplot
+Overview of different conditions with annotations
 }

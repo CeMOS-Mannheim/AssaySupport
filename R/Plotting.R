@@ -10,25 +10,30 @@ get_max <- function(labels_df,
 }
 
 
-#' Overview using ggplot
+#' Overview of different conditions with annotations
 #'
-#' @param spec_ID ID
-#' @param n_overlay number of spectra 
-#' @param labels_df df with labels
-#' @param specs spectra
-#' @param ab_max max value for abeta region
-#' @param aicd_max max value for aicd region
+#' @param spec_ID     Integer, ID of first spectrum
+#' @param n_overlay   Integer, number of spectra to plot (counting starts at \code{ID}) 
+#' @param labels_df   Data.frame, df with labels
+#' @param specs       \code{MALDIquant::MassSpectrum}
+#' @param ab_max      Numeric, max intensity value for abeta region
+#' @param aicd_max    Numeric, max intensity value for aicd region
+#' @param title       Character, title of plot. If set to "auto" it is generated automatically
+#' @param total_xlim  Numeric vector, x-axis limits for total spectrum view
+#' @param abeta_xlim  Numeric vector, x-axis limits for abeta spectrum view
+#' @param substr_xlim Numeric vector, x-axis limits for substrate spectrum view
+#' 
 #' @importFrom magrittr %>%
 #'
 #' @return ggplot
 #' @export
 ggoverview <- function(spec_ID,
                        n_overlay,
-                       labels_df = label_df,
+                       labels_df,
                        specs = spectra_align, 
                        ab_max = get_max(labels_df, "Ab"),
                        aicd_max = get_max(labels_df, "AICD"),
-                       label = "auto",
+                       title = "auto",
                        total_xlim = c(3000,16000),
                        abeta_xlim = c(4000,5000),
                        aicd_xlim = c(9400,10000),
@@ -36,12 +41,14 @@ ggoverview <- function(spec_ID,
   
   
   total_spec <- ggoverlay_spectra(spec_ID = spec_ID, 
+                                  specs = specs,
                                   labels_df = labels_df,
                                   xlim = total_xlim, 
                                   n_overlay = n_overlay, 
                                   normalizing = NA) 
   
   abeta_spec <- ggoverlay_spectra(spec_ID = spec_ID, 
+                                  specs = specs,
                                   labels_df = labels_df,
                                   xlim = abeta_xlim, 
                                   n_overlay = n_overlay, 
@@ -51,6 +58,7 @@ ggoverview <- function(spec_ID,
   }
   
   aicd_spec <- ggoverlay_spectra(spec_ID = spec_ID, 
+                                 specs = specs,
                                  labels_df = labels_df,
                                  xlim = aicd_xlim, 
                                  n_overlay = n_overlay, 
@@ -60,6 +68,7 @@ ggoverview <- function(spec_ID,
   }
   
   substr_spec <- ggoverlay_spectra(spec_ID = spec_ID, 
+                                   specs = specs,
                                    labels_df = labels_df,
                                    xlim = substr_xlim, 
                                    n_overlay = n_overlay, 
@@ -74,9 +83,9 @@ ggoverview <- function(spec_ID,
                          legend = "bottom",
                          ncol = 1, nrow = 3)
   
-  if(is.na(label)) {
+  if(is.na(title)) {
     return(p)
-  } else if(label == "auto") {
+  } else if(title == "auto") {
   p <- ggpubr::annotate_figure(p,
                                fig.lab = paste0(
                                  dplyr::filter(labels_df, plotIdx == spec_ID)$Substrate[1], 
@@ -84,34 +93,38 @@ ggoverview <- function(spec_ID,
                                  dplyr::filter(labels_df, plotIdx == spec_ID)$Type[1]))  
   } else {
     p <- ggpubr::annotate_figure(p,
-                                 fig.lab = label)  
+                                 fig.lab = title)  
   }
   
   return(p)
 }
 
 
-#' Plot spectrum with ggplot
+#' Plot spectrum with annotations
 #'
-#' @param spec_ID ID
-#' @param labels_df df with labels
-#' @param specs spectra 
-#' @param xlim limits
-#' @param n_overlay n
-#' @param showLabel logical
-#' @param normalizing logical
-#' @param tol tolerance
+#' @param spec_ID       Integer, ID spectrum to plot
+#' @param labels_df     Data.frame, df with labels
+#' @param specs         \code{MALDIquant::MassSpectrum} 
+#' @param xlim          Numeric vector, x-axis limits
+#' @param n_overlay     Integer, number of spectra to plot (counting starts at \code{ID})
+#' @param showLabel     Logical, show annotation in spectra
+#' @param normalizing   Character or numeric, normalization to be applied to data. Useful to compare different plots.
+#'                      Options:
+#'                        "NA"     No normalization
+#'                        "max"    Set highest signal to 100%
+#'                        numeric  Normalize to peak at \code{normalizing +- tol}  
+#' @param tol           Numeric, tolerance for normalization (if \code{normalizing} is numeric) 
 #' @importFrom magrittr %>%
 #'
 #' @return ggplot
 #' @export
 ggoverlay_spectra <- function(spec_ID,
-                              labels_df = label_df,
-                              specs = spectra_align,
+                              labels_df,
+                              specs,
                               xlim = c(4000, 5000),
                               n_overlay = 3,
                               showLabel = T,
-                              normalizing = "max",
+                              normalizing = NA,
                               tol = 3) {
   spec_df <- data.frame(Sample = character(),
                         mz = numeric(),
@@ -206,96 +219,4 @@ ggoverlay_spectra <- function(spec_ID,
     }
   }
   return(p)
-}
-
-#' Overview using base R graphics
-#'
-#' @param idx index
-#' @param specs spectra
-#' @param labeldf df with labels
-#' @param total_xlim limits
-#' @param AICD_xlim limits
-#' @param Ab_xlim limits
-#' @param subst_xlim limits
-#' @param offset offset
-#' @param ymax_label n
-#' @param ymax_adjust n
-#' @param overview_adjust n
-#'
-#' @return plot
-#' @export
-overviewplot <- function(idx, 
-                         specs = spectra_align, 
-                         labeldf = label_df, 
-                         total_xlim = c(3000, 16000), 
-                         AICD_xlim = c(9500, 10000),
-                         Ab_xlim =  c(3500, 5500),
-                         subst_xlim = c(13500, 15500),
-                         offset = 1.9,
-                         ymax_label = TRUE,
-                         ymax_adjust = 1.7,
-                         overview_adjust = 5) {
-  l_df <- labeldf[labeldf$plotIdx == idx,] 
-  if(ymax_label) {
-    l_df <- filter(l_df, !is.na(species))
-    if(dim(l_df)[1] < 1)
-      l_df <- labeldf[labeldf$plotIdx == idx,]
-  }
-  layout(matrix(c(1,1,1,1,2,2,2,2,3,3,4,4), 3, 4, byrow = TRUE))
-  par(mar = c(1,1,1,0) + 1.2)
-  plot(spectra_align[[idx]], xlim= total_xlim, ylim = c(0,max(l_df$int)*ymax_adjust*overview_adjust), main = metaData(spectra_align[[idx]])$sampleName)
-  points(peaks[[idx]], col = "red")
-  text(x = l_df$mz, y = l_df$int, labels = l_df$species, pos = 3, offset = offset, srt = 90)
-  plot(spectra_align[[idx]], xlim= Ab_xlim, main = "Abeta-region", ylim = c(0,max(l_df$int*ymax_adjust)))
-  points(peaks[[idx]], col = "red")
-  text(x = l_df$mz, y = l_df$int, labels = l_df$species, pos = 3, offset = offset, srt = 90)
-  plot(spectra_align[[idx]], xlim= AICD_xlim, main = "AICD-region", ylim = c(0,max(l_df$int*0.4)))
-  points(peaks[[idx]], col = "red")
-  text(x = l_df$mz, y = l_df$int, labels = l_df$species, pos = 3, offset = offset, srt = 90)
-  plot(spectra_align[[idx]], xlim= subst_xlim, main = "Substrate-region", ylim = c(0,max(l_df$int*0.1)))
-  points(peaks[[idx]], col = "red")
-  text(x = l_df$mz, y = l_df$int, labels = l_df$species, pos = 3, offset = offset, srt = 90)
-}
-
-#' Plot comparing different mutations using base R graphics
-#'
-#' @param idx n
-#' @param plot_n n
-#' @param specs n
-#' @param labeldf n
-#' @param Ab_xlim n
-#' @param ymax_label n
-#' @param ymax_adjust n
-#'
-#' @return plot
-#' @export
-mutation_plot <- function(idx, 
-                          plot_n = 4, 
-                          specs = spectra_align, 
-                          labeldf = label_df, 
-                          Ab_xlim =  c(3500, 5500), 
-                          ymax_label = TRUE, 
-                          ymax_adjust = 1.7) {
-  layout(matrix(1:plot_n, plot_n, 1, byrow = TRUE))
-  par(mar = c(1,1,1,0) + 1.2)
-  l_df <- labeldf[labeldf$plotIdx == idx,]
-  if(ymax_label) {
-    l_df <- filter(l_df, !is.na(species))
-    if(dim(l_df)[1] < 1)
-      l_df <- labeldf[labeldf$plotIdx == idx+n,]
-  }
-  plot(spectra_align[[idx]], xlim= Ab_xlim, ylim = c(0,max(l_df$int)*ymax_adjust), main = metaData(spectra_align[[idx]])$sampleName)
-  points(peaks[[idx]], col = "red")
-  text(x = l_df$mz, y = l_df$int, labels = l_df$species, pos = 3, offset = 0.5)
-  for(n in 1:(plot_n-1)) {
-    l_df <- labeldf[labeldf$plotIdx == idx+n,]
-    if(ymax_label) {
-      l_df <- filter(l_df, !is.na(species))
-      if(dim(l_df)[1] < 1)
-        l_df <- labeldf[labeldf$plotIdx == idx+n,]
-    }
-    plot(spectra_align[[idx+n]], xlim= Ab_xlim, ylim = c(0,max(l_df$int)*ymax_adjust), main = metaData(spectra_align[[idx+n]])$sampleName)
-    points(peaks[[idx+n]], col = "red")
-    text(x = l_df$mz, y = l_df$int, labels = l_df$species, pos = 3, offset = 0.5)
-  }
 }

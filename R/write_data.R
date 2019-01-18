@@ -39,7 +39,7 @@ write_msd <- function(spectra = spectra_align,
   cat("\n", AlzTools::timeNowHM(), "Writing avg spectra to disk...\n")
   # export spectra
   for(i in 1:length(spectra)) {
-    current_file <- paste0(Dir, namePrefix, "_", spectraNames[i], "_avg.msd")
+    current_file <- file.path(Dir,paste0(namePrefix, "_", spectraNames[i], "_avg.msd"))
     if(!is.na(peaks[1])) {
       MALDIquantForeign::exportMsd(x = spectra[[i]], 
                                    peaks = peaks[[i]], 

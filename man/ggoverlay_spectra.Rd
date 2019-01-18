@@ -4,9 +4,8 @@
 \alias{ggoverlay_spectra}
 \title{Plot spectrum with annotations}
 \usage{
-ggoverlay_spectra(spec_ID, labels_df = label_df, specs = spectra_align,
-  xlim = c(4000, 5000), n_overlay = 3, showLabel = T,
-  normalizing = NA, tol = 3)
+ggoverlay_spectra(spec_ID, labels_df, specs, xlim = c(4000, 5000),
+  n_overlay = 3, showLabel = T, normalizing = NA, tol = 3)
 }
 \arguments{
 \item{spec_ID}{Integer, ID spectrum to plot}

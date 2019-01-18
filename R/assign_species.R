@@ -23,18 +23,22 @@ assign_species <- function(peak_df,
                            mzcol = "mz", 
                            append = TRUE) {
   
-  speciesdf <- tibble::as.tibble(speciesdf)
-  peak_df <- tibble::as.tibble(peak_df)
+  speciesdf <- dplyr::as_tibble(speciesdf)
+  peak_df <- dplyr::as_tibble(peak_df)
   subsets <- unique(dplyr::pull(peak_df,subsetcol))
   
   res_df <- c()
   for(sub in subsets) {
     fmzlist <- speciesdf[speciesdf[,subsetcol] == sub,]
-    fpeak_df <- peak_df[peak_df[,subsetcol] == sub,]
+    fpeak_df <- data.frame(peak_df[peak_df[,subsetcol] == sub,],
+                                  species = NA,
+                                  mz.theo = NA,
+                                  mz.diff = NA,
+                                  mz.diff.ppm = NA) %>% dplyr::as_tibble()
     
     for(i in 1:dim(fpeak_df[, mzcol])[1]) {                # i index in fpeak_df, c_idx index in fmzlist
       mz <- fpeak_df[[i, mzcol]]
-      closest_idx <-  AlzTools::getClosest(fmzlist[,mzcol], mz)
+      closest_idx <-  AlzTools::getClosest(dplyr::pull(fmzlist, mzcol), mz)
       closest_mz <- dplyr::pull(fmzlist, mzcol)[closest_idx]
       
       if(closest_mz > mz - tol & closest_mz < mz + tol) {

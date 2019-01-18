@@ -4,14 +4,14 @@
 \alias{write_msd}
 \title{write spectra as MSD to disk}
 \usage{
-write_msd(spectra = spectra_align, parentDir = parentDir,
+write_msd(spectra = spectra_align, Dir = parentDir,
   spectraNames = unique(paste0(names(spectra))),
   namePrefix = namePrefix, peaks = peaks, annotation_df = NA)
 }
 \arguments{
 \item{spectra}{List or single \code{MALDIquant::MassSpectrum}, spectra to export.}
 
-\item{parentDir}{Character, folder to write spectra}
+\item{Dir}{Character, folder to write spectra}
 
 \item{spectraNames}{Character vector, names of spectra by default the \code{spectra} are expected to be named.}
 

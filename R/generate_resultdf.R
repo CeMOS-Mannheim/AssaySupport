@@ -35,7 +35,7 @@ generate_resultdf <- function(peak_df,
   
   res_df <- label_df %>%
     dplyr::filter(!is.na(species)) %>%
-    dplyr::group_by(Substrate, Condition, Type) %>%
+    dplyr::group_by(plotIdx) %>%
     dplyr::mutate(total.Ab = sum(int[grepl(paste(totalInt_varNames, collapse = "|"), species)]),
                   norm.tot = int/total.Ab*100)
   

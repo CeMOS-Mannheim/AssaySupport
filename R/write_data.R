@@ -8,10 +8,10 @@
 write_peak_list <-function(df, 
                            dir, 
                            namePrefix = "") {
-  labels_df %>% 
+  df %>% 
     filter(!is.na(species)) %>% 
     as.data.frame() %>%
-    xlsx::write.xlsx2(file = file.path(parentDir, paste0(namePrefix, "_", basename(parentDir),"_peak_list.xlsx")))
+    xlsx::write.xlsx2(file = file.path(dir, paste0(namePrefix, "_", basename(dir),"_peak_list.xlsx")))
 }
 
 #' write spectra as MSD to disk

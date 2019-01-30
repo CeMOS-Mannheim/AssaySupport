@@ -16,16 +16,16 @@ assign_species(peak_df, speciesdf, subsetcol = "Substrate", tol = 5,
         "mz"         Numeric, m/z of species.
 Column names can be changed but have to be specified in thid case by \code{subset.col, species.col, mz.col}}
 
+\item{subsetcol}{Character, name of column in \code{speciesdf} to subset data by (eg. "Substrate")}
+
 \item{tol}{Numeric, tolerance for assignment}
+
+\item{speciescol}{Character, name of column in \code{speciesdf} containing names of species}
+
+\item{mzcol}{Character, name of column in \code{speciesdf} containing m/z of species}
 
 \item{append}{Logical, if \code{TRUE} the result is appended as additional columns to the origninal data. 
 Otherwise only the resulting assignments are returned.}
-
-\item{subset.col}{Character, name of column in \code{speciesdf} to subset data by (eg. "Substrate")}
-
-\item{species.col}{Character, name of column in \code{speciesdf} containing names of species}
-
-\item{mz.col}{Character, name of column in \code{speciesdf} containing m/z of species}
 }
 \value{
 Data.frame with assigned peaks if append is TRUE

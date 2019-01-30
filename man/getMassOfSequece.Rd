@@ -27,6 +27,6 @@ The returned mass differs at the second decimal position from the values returne
 This is no big deal for linear mode and should also be ok for most reflector mode applications but can not be used to determine exact masses for FT-ICR.
 }
 \examples{
-Ab42 <- "DAEFRHDSGYEVHHQKLVFFAEDVGSNKGAIIGLMVGGVVIA"
-getMassOfSequece(Ab42)
+
+getMassOfSequece(C99_3xFLAG)
 }

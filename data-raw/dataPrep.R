@@ -21,5 +21,24 @@ test_peak_df <- AssaySupport::generate_peakdf(test_spectra_proc,
                                               SNR = 3, 
                                               binpeaks = FALSE) 
 
+# _c99_sarah.sqs: old sequence 
+C99_3xFLAG <- c(C99_3xFLAG = "DAEFRHDSGYEVHHQKLVFFAEDVGSNKGAIIGLMVGGVVIATVIVITLVMLKKKQYTSIHHGVVEVDAAVTPEERHLSKMQQNGYENPTYKFFEQMQNGSDYKDHDGDYKDHDIDYKDDDDKGTLEVLFQ")
+# C99-3xFLAG_delT.sqs: new sequence 
+C99_deltaT <- c(C99_deltaT = "DAEFRHDSGYEVHHQKLVFFAEDVGSNKGAIIGLMVGGVVIATVIVITLVMLKKKQYTSIHHGVVEVDAAVTPEERHLSKMQQNGYENPTYKFFEQMQNGSDYKDHDGDYKDHDIDYKDDDDKGLEVLFQ")
 
-usethis::use_data(test_Ablist, test_spectra, test_spectra_proc, test_peaks, test_peak_df)
+# Substrates for Maria
+Neurexin   <- c(Neurexin = "DAEFRVIRESSSTTGMVVGIVAAAALCILILLYAMYKYRNRDEGSYQVDETRNYISNSAQSNGTLMKEKQASSKSGHKKQKNKDKEYYVGSDYKDHDGDYKDHDIDYKDDDDKGTLEVLFQ")
+ErbB4      <- c(ErbB4 = "IYYPWTGHSTLPQHARTPLIAAGVIGGLFILVIVGLTFAVYVRRKSIKKKRALRRFLETELVEPLTPSGTAYPYDVPDYASLGGPDYKDHDGDYKDHDIDYKDDDDK")
+EphA4      <- c(EphA4 = "TNTVPSRIIGDGANSTVLLVSVSGSVVLVVILIAAFVISRRRSKYSKAKQEADEEKHLNQGVRTDYKDHDGDYKDHDIDYKDDDDK")
+
+
+C99_mutations <- data.frame(name = c("Tottori", "Flemish", "Iowa", "Arctic", "Dutch", "Iberian"),
+                            code = c("D7N", "A21G", "D23N", "E22G", "E22Q", "I45F"),
+                            pos = c(7, 21, 23, 22, 22, 45),
+                            substitute = c("N", "G", "N", "G", "Q", "F"), stringsAsFactors = FALSE)
+
+
+usethis::use_data(test_Ablist, test_spectra, test_spectra_proc, test_peaks, test_peak_df, 
+                  C99_3xFLAG, C99_deltaT, C99_mutations,
+                  Neurexin, ErbB4, EphA4,
+                  overwrite = TRUE)

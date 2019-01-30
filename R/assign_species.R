@@ -6,10 +6,10 @@
 #'                            "Species"    Character, the name of the species 
 #'                            "mz"         Numeric, m/z of species.
 #'                    Column names can be changed but have to be specified in thid case by \code{subset.col, species.col, mz.col}
-#' @param subset.col  Character, name of column in \code{speciesdf} to subset data by (eg. "Substrate") 
+#' @param subsetcol   Character, name of column in \code{speciesdf} to subset data by (eg. "Substrate") 
 #' @param tol         Numeric, tolerance for assignment 
-#' @param species.col Character, name of column in \code{speciesdf} containing names of species
-#' @param mz.col      Character, name of column in \code{speciesdf} containing m/z of species
+#' @param speciescol  Character, name of column in \code{speciesdf} containing names of species
+#' @param mzcol       Character, name of column in \code{speciesdf} containing m/z of species
 #' @param append      Logical, if \code{TRUE} the result is appended as additional columns to the origninal data. 
 #'                    Otherwise only the resulting assignments are returned.
 #'

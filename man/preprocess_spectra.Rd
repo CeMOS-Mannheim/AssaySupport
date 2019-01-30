@@ -10,6 +10,8 @@ preprocess_spectra(spec = spectra, smooth_meth = "SavitzkyGolay",
   align = FALSE)
 }
 \arguments{
+\item{spec}{List of \code{MALDIquant::MassSpectrum}}
+
 \item{smooth_meth}{Character, smoothing method see \code{MALDIquant::smoothIntensity()}}
 
 \item{smooth_halfWindowSize}{Numeric, halfWindowSize for smoothing method see \code{MALDIquant::smoothIntensity()}}
@@ -20,7 +22,7 @@ preprocess_spectra(spec = spectra, smooth_meth = "SavitzkyGolay",
 
 \item{baseline_meth}{Character, baseline removal method see \code{MALDIquant::removeBaseline}}
 
-\item{spectra}{List of \code{MALDIquant::MassSpectrum}}
+\item{align}{Logical, perform alignment.}
 }
 \value{
 List of preprocessed \code{MALDIquant::MassSpectrum}

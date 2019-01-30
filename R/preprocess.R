@@ -1,11 +1,12 @@
 #' Preprocess spectra
 #'
-#' @param spectra               List of \code{MALDIquant::MassSpectrum}
+#' @param spec                  List of \code{MALDIquant::MassSpectrum}
 #' @param smooth_meth           Character, smoothing method see \code{MALDIquant::smoothIntensity()}
 #' @param smooth_halfWindowSize Numeric, halfWindowSize for smoothing method see \code{MALDIquant::smoothIntensity()}
 #' @param norm_meth             Character, normalization method see \code{MALDIquant::calibrateIntensity()}
 #' @param filter_spectra        Character vector, regex of patterns to exclude spectra (like calibration spectra in same folder)
 #' @param baseline_meth         Character, baseline removal method see \code{MALDIquant::removeBaseline}
+#' @param align                 Logical, perform alignment.
 #'
 #' @return List of preprocessed \code{MALDIquant::MassSpectrum}
 #' @export

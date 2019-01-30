@@ -29,6 +29,8 @@ ggoverview(spec_ID, n_overlay, labels_df, specs = spectra_align,
 
 \item{abeta_xlim}{Numeric vector, x-axis limits for abeta spectrum view}
 
+\item{aicd_xlim}{Numeric vector, x-axis limits for AICD spectrum view}
+
 \item{substr_xlim}{Numeric vector, x-axis limits for substrate spectrum view}
 }
 \value{

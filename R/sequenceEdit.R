@@ -26,8 +26,8 @@ addProton <- function(element_list, charge = 1) {
 #' @export
 #'
 #' @examples
-#' Ab42 <- "DAEFRHDSGYEVHHQKLVFFAEDVGSNKGAIIGLMVGGVVIA"
-#' getMassOfSequece(Ab42)
+#' 
+#' getMassOfSequece(C99_3xFLAG)
 getMassOfSequece <- function(sequence, charge = 1, mode = "avg", IAA = FALSE, unlist = TRUE) {
   if(!typeof(sequence) == "list") {
     sequencelist <- list(sequence)
@@ -35,16 +35,14 @@ getMassOfSequece <- function(sequence, charge = 1, mode = "avg", IAA = FALSE, un
     sequencelist <- sequence
   }
   
-  res_list <- vector("list", length(sequencelist))
-  if(!charge > 1) {
-    names(res_list) <- names(sequence)
-  } else {
-    names(res_list) <- paste0(names(sequence), "[", charge,"H+]")
-  }
+  res_list <- vector("list", length(sequencelist) * length(charge))
   
+  counter <- 0
   for(i in 1:length(sequencelist)) {
+    for(j in 1:length(charge)) {
+      counter <- counter + 1
     element_list <- addProton(OrgMassSpecR::ConvertPeptide(sequencelist[[i]], IAA = IAA), 
-                              charge = charge)
+                              charge = charge[j])
     
     switch (mode,
             mono = {
@@ -52,13 +50,20 @@ getMassOfSequece <- function(sequence, charge = 1, mode = "avg", IAA = FALSE, un
             },
             avg = {
               isotopicPattern <- OrgMassSpecR::IsotopicDistribution(element_list, 
-                                                                    charge = charge)
+                                                                    charge = charge[j])
               res <- isotopicPattern %>% 
                 dplyr::mutate(part = mz * percent) %>%
                 dplyr::summarise(avg = sum(part)/sum(percent)) %>%
                 dplyr::pull(avg)
             })
-    res_list[[i]] <- res
+    res_list[[counter]] <- res
+    if(!charge[j] > 1) {
+      names(res_list)[counter] <- names(sequence)[i]
+    } else {
+      names(res_list)[counter] <- paste0(names(sequence)[i], "[", charge[j],"H+]")
+    }
+    
+    }
   }
   if(!typeof(sequence) == "list" | unlist) {
     return(unlist(res_list))
@@ -110,21 +115,23 @@ cutSequence <- function(sequence, start = 1, end = nchar(sequence), prefix = "Fr
 #' data.frame with columns Sequence, Species and mz
 #' 
 #' @examples
-#' 
+#' generate_assigndf(C99_3xFLAG)
 #' 
 #' @export
-#' 
-#' 
 
 generate_assigndf <- function(sequencelist, fragmentList = list(Ab = list(start = 1 , end = 37:49, charge = 1),
-                                                                AICD = list(start = 49:50, end = nchar(sequencelist[[1]]), charge = 1),
-                                                                Substrate = list(start = 1, end = nchar(sequencelist[[1]]), charge = 1))) {
+                                                                AICD = list(start = 49:50, end = nchar(sequencelist[[1]]), charge = 1:2),
+                                                                Substrate = list(start = 1, end = nchar(sequencelist[[1]]), charge = 1:2))) {
   res_df <- data.frame(Substrate = character(),
                        Species = character(),
-                       mz = numeric())
+                       mz = numeric(), stringsAsFactors = FALSE)
   
   for(i in 1:length(sequencelist)) {
     seqName <- names(sequencelist)[i]
+    if(is.null(seqName)) {
+      seqName <- "Unkown"
+      warning("No name found for sequence number ", i,"\n")
+    }
     for(j in 1:length(fragmentList)) {
       prefix <- names(fragmentList)[j]
       res <- getMassOfSequece(sequence = cutSequence(sequence = sequencelist[[i]], 
@@ -135,25 +142,55 @@ generate_assigndf <- function(sequencelist, fragmentList = list(Ab = list(start 
                               mode = "avg", 
                               IAA = FALSE, 
                               unlist = TRUE)
-      res_df <- rbind(res_df, data.frame(Sequence = seqName, Species = names(res), mz = res))
+      res_df <- rbind(res_df, data.frame(Sequence = seqName, Species = names(res), mz = res, stringsAsFactors = FALSE))
     }
-    return(res_df)
+    
   }
-  
+  rownames(res_df) <- NULL
+  return(res_df)
 }
 
-pointMutateSequence <- function(sequence, pos, substitute) {
-  res_list <- vector("list", length(pos) * length(substitute))
+
+#' Change single amino acid in sequence
+#'
+#' @param sequence   Character, sequence to edit.
+#' @param pos        Integer vector, position at which \code{sequence} should be edited.
+#' @param substitute Character vector, amino acid (sequece) to change the amino acid at \code{pos} with.
+#' @param names      Character vector, names of generated sequences. 
+#'                   Set to \code{NULL} to generate systemic names (e.g. D7N for Tottori)
+#'
+#' @return           mutated amino acid sequences
+#'
+#' @examples
+#' pointMutateSequence(sequence = C99_deltaT, 
+#'                     pos = C99_mutations$pos, 
+#'                     substitute = C99_mutations$substitute, 
+#'                     names = C99_mutations$name)
+#'                     
+#' @export
+pointMutateSequence <- function(sequence, pos, substitute, names = NULL) {
+  if(!length(pos) == length(substitute)) {
+    stop("pos and substitute must have same length!\n")
+  }
+  
+  res_list <- vector("list", length(pos))
   counter <- 0
   for(j in 1:length(pos)) {
-    for(k in 1:length(substitute)) {
+    
       counter <- counter + 1
       start <- substr(sequence, 1, pos[j] - 1)
       end <- substr(sequence, pos[j] + 1, nchar(sequence))
-      res_list[[counter]] <- paste0(start, substitute[k], end)
+      res_list[[counter]] <- paste0(start, substitute[j], end)
       
-      names(res_list)[counter] <- paste0(substr(sequence, pos[j], pos[j]), pos[j], substitute[k])
-    }
+      if(any(is.null(names))) {
+      names(res_list)[counter] <- paste0(substr(sequence, pos[j], pos[j]), pos[j], substitute[j])
+      } else {
+        if(!length(names) == length(res_list)) {
+          stop("There has to be either no (automatic naming) or a name for each mutated sequence! \n")
+        }
+        names(res_list)[counter] <- names[counter]
+      }
+    
   }
   if(length(pos) == 1 | length(substitute) == 1){
     return(unlist(res_list))

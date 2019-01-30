@@ -21,6 +21,7 @@ get_max <- function(labels_df,
 #' @param title       Character, title of plot. If set to "auto" it is generated automatically
 #' @param total_xlim  Numeric vector, x-axis limits for total spectrum view
 #' @param abeta_xlim  Numeric vector, x-axis limits for abeta spectrum view
+#' @param aicd_xlim   Numeric vector, x-axis limits for AICD spectrum view
 #' @param substr_xlim Numeric vector, x-axis limits for substrate spectrum view
 #' 
 #' @importFrom magrittr %>%

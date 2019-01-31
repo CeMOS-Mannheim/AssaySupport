@@ -41,28 +41,28 @@ getMassOfSequece <- function(sequence, charge = 1, mode = "avg", IAA = FALSE, un
   for(i in 1:length(sequencelist)) {
     for(j in 1:length(charge)) {
       counter <- counter + 1
-    element_list <- addProton(OrgMassSpecR::ConvertPeptide(sequencelist[[i]], IAA = IAA), 
-                              charge = charge[j])
-    
-    switch (mode,
-            mono = {
-              res <- OrgMassSpecR::MolecularWeight(element_list)
-            },
-            avg = {
-              isotopicPattern <- OrgMassSpecR::IsotopicDistribution(element_list, 
-                                                                    charge = charge[j])
-              res <- isotopicPattern %>% 
-                dplyr::mutate(part = mz * percent) %>%
-                dplyr::summarise(avg = sum(part)/sum(percent)) %>%
-                dplyr::pull(avg)
-            })
-    res_list[[counter]] <- res
-    if(!charge[j] > 1) {
-      names(res_list)[counter] <- names(sequence)[i]
-    } else {
-      names(res_list)[counter] <- paste0(names(sequence)[i], "[", charge[j],"H+]")
-    }
-    
+      element_list <- addProton(OrgMassSpecR::ConvertPeptide(sequencelist[[i]], IAA = IAA), 
+                                charge = charge[j])
+      
+      switch (mode,
+              mono = {
+                res <- OrgMassSpecR::MolecularWeight(element_list)
+              },
+              avg = {
+                isotopicPattern <- OrgMassSpecR::IsotopicDistribution(element_list, 
+                                                                      charge = charge[j])
+                res <- isotopicPattern %>% 
+                  dplyr::mutate(part = mz * percent) %>%
+                  dplyr::summarise(avg = sum(part)/sum(percent)) %>%
+                  dplyr::pull(avg)
+              })
+      res_list[[counter]] <- res
+      if(!charge[j] > 1) {
+        names(res_list)[counter] <- names(sequence)[i]
+      } else {
+        names(res_list)[counter] <- paste0(names(sequence)[i], "[", charge[j],"H+]")
+      }
+      
     }
   }
   if(!typeof(sequence) == "list" | unlist) {
@@ -119,12 +119,16 @@ cutSequence <- function(sequence, start = 1, end = nchar(sequence), prefix = "Fr
 #' 
 #' @export
 
-generate_assigndf <- function(sequencelist, fragmentList = list(Ab = list(start = 1 , end = 37:49, charge = 1),
-                                                                AICD = list(start = 49:50, end = nchar(sequencelist[[1]]), charge = 1:2),
-                                                                Substrate = list(start = 1, end = nchar(sequencelist[[1]]), charge = 1:2))) {
-  res_df <- data.frame(Substrate = character(),
-                       Species = character(),
-                       mz = numeric(), stringsAsFactors = FALSE)
+generate_assigndf <- function(sequencelist, 
+                              noSubstrateName = "None",
+                              fragmentList = list(Ab = list(start = 1 , end = 37:49, charge = 1),
+                                                  AICD = list(start = 49:50, end = nchar(sequencelist[[1]]), charge = 1:2),
+                                                  Substrate = list(start = 1, end = nchar(sequencelist[[1]]), charge = 1:2))) {
+  
+  res_df <- data.frame(Substrate = noSubstrateName,
+                       Species = "Substrate",
+                       mz = 0, 
+                       stringsAsFactors = FALSE)
   
   for(i in 1:length(sequencelist)) {
     seqName <- names(sequencelist)[i]
@@ -177,19 +181,19 @@ pointMutateSequence <- function(sequence, pos, substitute, names = NULL) {
   counter <- 0
   for(j in 1:length(pos)) {
     
-      counter <- counter + 1
-      start <- substr(sequence, 1, pos[j] - 1)
-      end <- substr(sequence, pos[j] + 1, nchar(sequence))
-      res_list[[counter]] <- paste0(start, substitute[j], end)
-      
-      if(any(is.null(names))) {
+    counter <- counter + 1
+    start <- substr(sequence, 1, pos[j] - 1)
+    end <- substr(sequence, pos[j] + 1, nchar(sequence))
+    res_list[[counter]] <- paste0(start, substitute[j], end)
+    
+    if(any(is.null(names))) {
       names(res_list)[counter] <- paste0(substr(sequence, pos[j], pos[j]), pos[j], substitute[j])
-      } else {
-        if(!length(names) == length(res_list)) {
-          stop("There has to be either no (automatic naming) or a name for each mutated sequence! \n")
-        }
-        names(res_list)[counter] <- names[counter]
+    } else {
+      if(!length(names) == length(res_list)) {
+        stop("There has to be either no (automatic naming) or a name for each mutated sequence! \n")
       }
+      names(res_list)[counter] <- names[counter]
+    }
     
   }
   if(length(pos) == 1 | length(substitute) == 1){

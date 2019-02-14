@@ -125,7 +125,7 @@ generate_assigndf <- function(sequencelist,
                                                   AICD = list(start = 49:50, end = nchar(sequencelist[[1]]), charge = 1:2),
                                                   Substrate = list(start = 1, end = nchar(sequencelist[[1]]), charge = 1:2))) {
   
-  res_df <- data.frame(Substrate = noSubstrateName,
+  res_df <- data.frame(Sequence = noSubstrateName,
                        Species = "Substrate",
                        mz = 0, 
                        stringsAsFactors = FALSE)

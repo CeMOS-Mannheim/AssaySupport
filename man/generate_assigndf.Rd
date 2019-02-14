@@ -4,10 +4,11 @@
 \alias{generate_assigndf}
 \title{Generate data.frame with sequence fragments as used by \code{assign_species}}
 \usage{
-generate_assigndf(sequencelist, fragmentList = list(Ab = list(start = 1,
-  end = 37:49, charge = 1), AICD = list(start = 49:50, end =
-  nchar(sequencelist[[1]]), charge = 1:2), Substrate = list(start = 1, end
-  = nchar(sequencelist[[1]]), charge = 1:2)))
+generate_assigndf(sequencelist, noSubstrateName = "None",
+  fragmentList = list(Ab = list(start = 1, end = 37:49, charge = 1), AICD
+  = list(start = 49:50, end = nchar(sequencelist[[1]]), charge = 1:2),
+  Substrate = list(start = 1, end = nchar(sequencelist[[1]]), charge =
+  1:2)))
 }
 \arguments{
 \item{sequencelist}{named list, sequences to process. Need to have the same character length for the default value of fragmentList to work}

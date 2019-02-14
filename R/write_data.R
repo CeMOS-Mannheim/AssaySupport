@@ -11,7 +11,7 @@ write_peak_list <-function(df,
   df %>% 
     filter(!is.na(species)) %>% 
     as.data.frame() %>%
-    xlsx::write.xlsx2(file = file.path(dir, paste0(namePrefix, "_", basename(dir),"_peak_list.xlsx")))
+    openxlsx::write.xlsx(., file.path(dir, paste0(namePrefix, "_", basename(dir),"_peak_list.xlsx")))
 }
 
 #' write spectra as MSD to disk

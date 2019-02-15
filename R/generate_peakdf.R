@@ -12,10 +12,11 @@
 #' @examples 
 #' head(generate_peakdf(test_spectra_proc))
 
-generate_peakdf <- function(spectra, pick_meth = "SuperSmoother", halfWindowSize = 10, SNR = 3, binpeaks = FALSE) {
-  
-  
-  
+generate_peakdf <- function(spectra, 
+                            pick_meth = "SuperSmoother",
+                            halfWindowSize = 10, 
+                            SNR = 3, 
+                            binpeaks = FALSE) {
   peaks <- MALDIquant::detectPeaks(spectra, method = pick_meth, SNR = SNR, halfWindowSize = halfWindowSize)
   if(MALDIquant::isMassSpectrum(spectra)) {
     spectra <- list(spectra)

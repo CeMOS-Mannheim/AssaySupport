@@ -72,5 +72,6 @@
 #'   \item{SNR}{Signal-to-Noise Ratio of peak.}
 #'   }
 "test_peak_df"
-
+#' Example of \code{result_df} containing annotations
+"test_result_df"
 

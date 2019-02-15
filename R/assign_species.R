@@ -36,7 +36,7 @@ assign_species <- function(peak_df,
                                   mz.diff = NA,
                                   mz.diff.ppm = NA) %>% dplyr::as_tibble()
     
-    for(i in 1:dim(fpeak_df[, mzcol])[1]) {                # i index in fpeak_df, c_idx index in fmzlist
+    for(i in 1:dim(fpeak_df[, mzcol])[1]) {                
       mz <- fpeak_df[[i, mzcol]]
       closest_idx <-  AlzTools::getClosest(dplyr::pull(fmzlist, mzcol), mz)
       closest_mz <- dplyr::pull(fmzlist, mzcol)[closest_idx]
@@ -44,7 +44,6 @@ assign_species <- function(peak_df,
       if(closest_mz > mz - tol & closest_mz < mz + tol) {
         for(c_idx in closest_idx) {
           fpeak_df[i, "species"] <- paste(pull(fmzlist, speciescol)[closest_idx], collapse = ", ")
-          #fpeak_df[c_idx, "species.substrate"] <- fmzlist[i, subset.col]
           fpeak_df[i, "mz.theo"] <- fmzlist[c_idx, mzcol]
           fpeak_df[i, "mz.diff"] <- round(abs(fmzlist[c_idx,mzcol] - mz),1)
           fpeak_df[i, "mz.diff.ppm"] <- round(abs(fmzlist[c_idx,mzcol] - mz)/mz*10^6,1)

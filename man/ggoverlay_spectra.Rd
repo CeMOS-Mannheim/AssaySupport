@@ -5,7 +5,8 @@
 \title{Plot spectrum with annotations}
 \usage{
 ggoverlay_spectra(spec_ID, labels_df, specs, xlim = c(4000, 5000),
-  n_overlay = 3, showLabel = T, normalizing = NA, tol = 3)
+  n_overlay = 3, showLabel = T, normalizing = NA, tol = 3,
+  separateInto = c("Substrate", "Type", "Condition"))
 }
 \arguments{
 \item{spec_ID}{Integer, ID spectrum to plot}
@@ -33,4 +34,10 @@ ggplot
 }
 \description{
 Plot spectrum with annotations
+}
+\examples{
+ggoverlay_spectra(spec_ID = 1, 
+                  labels_df = test_result_df, 
+                  specs = test_spectra_proc, 
+                  n_overlay = 2)
 }

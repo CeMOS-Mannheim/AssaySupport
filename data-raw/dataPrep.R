@@ -21,6 +21,10 @@ test_peak_df <- AssaySupport::generate_peakdf(test_spectra_proc,
                                               SNR = 3, 
                                               binpeaks = FALSE) 
 
+test_result_df <- generate_resultdf(test_peak_df, 
+                                    test_Ablist, 
+                                    tol = 5)
+
 # _c99_sarah.sqs: old sequence 
 C99_3xFLAG <- c(C99 = "DAEFRHDSGYEVHHQKLVFFAEDVGSNKGAIIGLMVGGVVIATVIVITLVMLKKKQYTSIHHGVVEVDAAVTPEERHLSKMQQNGYENPTYKFFEQMQNGSDYKDHDGDYKDHDIDYKDDDDKGTLEVLFQ")
 # C99-3xFLAG_delT.sqs: new sequence 
@@ -38,7 +42,7 @@ C99_mutations <- data.frame(name = c("Tottori", "Flemish", "Iowa", "Arctic", "Du
                             substitute = c("N", "G", "N", "G", "Q", "F"), stringsAsFactors = FALSE)
 
 
-usethis::use_data(test_Ablist, test_spectra, test_spectra_proc, test_peaks, test_peak_df, 
+usethis::use_data(test_Ablist, test_spectra, test_spectra_proc, test_peaks, test_peak_df, test_result_df,
                   C99_3xFLAG, C99_deltaT, C99_mutations,
                   Neurexin, ErbB4, EphA4,
                   overwrite = TRUE)

@@ -30,3 +30,13 @@ List of preprocessed \code{MALDIquant::MassSpectrum}
 \description{
 Preprocess spectra
 }
+\examples{
+test_spectra_proc <- AssaySupport::preprocess_spectra(spec = test_spectra,
+                                                      smooth_meth = "SavitzkyGolay",
+                                                      smooth_halfWindowSize  = 5,
+                                                      norm_meth = "TIC",
+                                                      filter_spectra = NA,
+                                                      baseline_meth = "TopHat",
+                                                      align = FALSE)
+
+}

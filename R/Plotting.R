@@ -119,6 +119,12 @@ ggoverview <- function(spec_ID,
 #'
 #' @return ggplot
 #' @export
+#' 
+#' @examples 
+#' ggoverlay_spectra(spec_ID = 1, 
+#'                   labels_df = test_result_df, 
+#'                   specs = test_spectra_proc, 
+#'                   n_overlay = 2)
 ggoverlay_spectra <- function(spec_ID,
                               labels_df,
                               specs,
@@ -126,7 +132,12 @@ ggoverlay_spectra <- function(spec_ID,
                               n_overlay = 3,
                               showLabel = T,
                               normalizing = NA,
-                              tol = 3) {
+                              tol = 3,
+                              separateInto = c("Substrate", "Type", "Condition")) {
+  if(is.null(names(specs))) {
+    warning("Supplied spectra had no name. Setting name to noName.\n")
+    names(specs) <- "noName"
+  }
   spec_df <- data.frame(Sample = character(),
                         mz = numeric(),
                         int = numeric())
@@ -140,9 +151,12 @@ ggoverlay_spectra <- function(spec_ID,
   
   spec_df <- filter(spec_df, 
                     !mz < xlim[1], 
-                    !mz > xlim[2]) %>%
-    separate(Sample, into = c("Substrate", "Type", "Condition"), sep = "_")
-  
+                    !mz > xlim[2]) 
+  if(!any(is.na(separateInto))) {
+    spec_df <- spec_df  %>% 
+      separate(Sample, into = separateInto, sep = "_")
+    separateInto <- "Sample"
+  }
   if(!is.na(normalizing)) {
     if(normalizing == "max") {
       spec_df <- spec_df %>%
@@ -163,7 +177,7 @@ ggoverlay_spectra <- function(spec_ID,
         select(Substrate, Type, Condition, norm)
       
       spec_df <- spec_df %>%
-        left_join(spec_df_norm, by =c("Substrate", "Type", "Condition")) %>%
+        left_join(spec_df_norm, by = separateInto) %>%
         group_by(Substrate, Type, Condition) %>%
         mutate(int = int/norm * 100)
       
@@ -174,7 +188,7 @@ ggoverlay_spectra <- function(spec_ID,
         select(Substrate, Type, Condition, norm)
       
       labels_df <- labels_df %>%
-        left_join(spec_df_norm, by =c("Substrate", "Type", "Condition")) %>%
+        left_join(spec_df_norm, by = separateInto) %>%
         group_by(Substrate, Type, Condition) %>%
         mutate(int = int/norm * 100)
     }

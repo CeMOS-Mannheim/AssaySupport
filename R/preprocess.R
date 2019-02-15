@@ -10,6 +10,15 @@
 #'
 #' @return List of preprocessed \code{MALDIquant::MassSpectrum}
 #' @export
+#' @examples 
+#' test_spectra_proc <- AssaySupport::preprocess_spectra(spec = test_spectra,
+#'                                                       smooth_meth = "SavitzkyGolay",
+#'                                                       smooth_halfWindowSize  = 5,
+#'                                                       norm_meth = "TIC",
+#'                                                       filter_spectra = NA,
+#'                                                       baseline_meth = "TopHat",
+#'                                                       align = FALSE)
+#' 
 preprocess_spectra <- function(spec = spectra, 
                                smooth_meth = "SavitzkyGolay",
                                smooth_halfWindowSize  = 20,

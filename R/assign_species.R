@@ -8,6 +8,7 @@
 #'                    Column names can be changed but have to be specified in thid case by \code{subset.col, species.col, mz.col}
 #' @param subsetcol   Character, name of column in \code{speciesdf} to subset data by (eg. "Substrate") 
 #' @param tol         Numeric, tolerance for assignment 
+#' @param tolppm      Logical, use relative tolerance in ppm (\code{tol} is multiplied by 1e-6 internally).
 #' @param speciescol  Character, name of column in \code{speciesdf} containing names of species
 #' @param mzcol       Character, name of column in \code{speciesdf} containing m/z of species
 #' @param append      Logical, if \code{TRUE} the result is appended as additional columns to the origninal data. 
@@ -18,35 +19,55 @@
 assign_species <- function(peak_df, 
                            speciesdf, 
                            subsetcol = "Substrate",
-                           tol = 5,  
+                           tol = 5, 
+                           tolppm = FALSE,
                            speciescol = "Species", 
                            mzcol = "mz", 
                            append = TRUE) {
   
   speciesdf <- dplyr::as_tibble(speciesdf)
   peak_df <- dplyr::as_tibble(peak_df)
-  subsets <- unique(dplyr::pull(peak_df,subsetcol))
+  if(!is.na(subsetcol)) {
+    subsets <- unique(dplyr::pull(peak_df,subsetcol))
+  } else {
+    subsets <- NA
+  }
   
   res_df <- c()
   for(sub in subsets) {
-    fmzlist <- speciesdf[speciesdf[,subsetcol] == sub,]
-    fpeak_df <- data.frame(peak_df[peak_df[,subsetcol] == sub,],
-                                  species = NA,
-                                  mz.theo = NA,
-                                  mz.diff = NA,
-                                  mz.diff.ppm = NA) %>% dplyr::as_tibble()
+    if(!is.na(subsetcol)) { 
+      fmzlist <- speciesdf[speciesdf[,subsetcol] == sub,]
+      fpeak_df <- data.frame(peak_df[peak_df[,subsetcol] == sub,],
+                             species = NA,
+                             mz.theo = NA,
+                             mz.diff = NA,
+                             mz.diff.ppm = NA) %>% dplyr::as_tibble()
+    } else { # no subsetting
+      fmzlist <- speciesdf
+      fpeak_df <- data.frame(peak_df,
+                             species = NA,
+                             mz.theo = NA,
+                             mz.diff = NA,
+                             mz.diff.ppm = NA) %>% dplyr::as_tibble()
+    }
     
     for(i in 1:dim(fpeak_df[, mzcol])[1]) {                
       mz <- fpeak_df[[i, mzcol]]
       closest_idx <-  AlzTools::getClosest(dplyr::pull(fmzlist, mzcol), mz)
       closest_mz <- dplyr::pull(fmzlist, mzcol)[closest_idx]
       
-      if(closest_mz > mz - tol & closest_mz < mz + tol) {
+      if(tolppm) {
+        tol_ <- mz * tol * 1e-6
+      } else {
+        tol_ <- tol
+      }
+      
+      if(closest_mz > mz - tol_ & closest_mz < mz + tol_) {
         for(c_idx in closest_idx) {
           fpeak_df[i, "species"] <- paste(pull(fmzlist, speciescol)[closest_idx], collapse = ", ")
           fpeak_df[i, "mz.theo"] <- fmzlist[c_idx, mzcol]
           fpeak_df[i, "mz.diff"] <- round(abs(fmzlist[c_idx,mzcol] - mz),1)
-          fpeak_df[i, "mz.diff.ppm"] <- round(abs(fmzlist[c_idx,mzcol] - mz)/mz*10^6,1)
+          fpeak_df[i, "mz.diff.ppm"] <- round(abs(fmzlist[c_idx,mzcol] - mz)/mz*1e6,1)
         }
       }
       

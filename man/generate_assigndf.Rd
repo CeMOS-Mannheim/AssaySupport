@@ -11,9 +11,11 @@ generate_assigndf(sequencelist, noSubstrateName = "None",
   1:2)))
 }
 \arguments{
-\item{sequencelist}{named list, sequences to process. Need to have the same character length for the default value of fragmentList to work}
+\item{sequencelist}{Named list, sequences to process. Need to have the same character length for the default value of fragmentList to work}
 
-\item{fragmentList}{named list, giving the name of the fragments and their start and end positions. See default values for an example.}
+\item{noSubstrateName}{Character, name for "no Substrate".}
+
+\item{fragmentList}{Named list, giving the name of the fragments and their start and end positions. See default values for an example.}
 }
 \value{
 data.frame with columns Sequence, Species and mz

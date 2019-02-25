@@ -115,7 +115,11 @@ ggoverview <- function(spec_ID,
 #'                        "max"    Set highest signal to 100%
 #'                        numeric  Normalize to peak at \code{normalizing +- tol}  
 #' @param tol           Numeric, tolerance for normalization (if \code{normalizing} is numeric) 
-#' @importFrom magrittr %>%
+#' @param separateInto  Character vector, splitt spectra names into columns. Sep = "_".
+#' @importFrom magrittr %>% 
+#' @importFrom tidyr separate
+#' @importFrom ggplot2 aes ggplot geom_line 
+#' @importFrom dplyr group_by
 #'
 #' @return ggplot
 #' @export

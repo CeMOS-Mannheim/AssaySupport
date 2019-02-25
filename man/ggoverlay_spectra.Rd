@@ -28,6 +28,8 @@ Options:
   numeric  Normalize to peak at \code{normalizing +- tol}}
 
 \item{tol}{Numeric, tolerance for normalization (if \code{normalizing} is numeric)}
+
+\item{separateInto}{Character vector, splitt spectra names into columns. Sep = "_".}
 }
 \value{
 ggplot

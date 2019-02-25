@@ -108,8 +108,9 @@ cutSequence <- function(sequence, start = 1, end = nchar(sequence), prefix = "Fr
 
 #' Generate data.frame with sequence fragments as used by \code{assign_species}
 #'
-#' @param sequencelist named list, sequences to process. Need to have the same character length for the default value of fragmentList to work
-#' @param fragmentList named list, giving the name of the fragments and their start and end positions. See default values for an example.
+#' @param sequencelist      Named list, sequences to process. Need to have the same character length for the default value of fragmentList to work
+#' @param fragmentList      Named list, giving the name of the fragments and their start and end positions. See default values for an example.
+#' @param noSubstrateName   Character, name for "no Substrate".
 #'
 #' @return
 #' data.frame with columns Sequence, Species and mz

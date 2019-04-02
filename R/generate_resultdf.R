@@ -8,6 +8,7 @@
 #' @param tol               Numeric, tolerance for assignment.
 #' @param totalInt_varNames Character vector, names of variables to sum up for total intensity (e.g. part of product name: "Ab")
 #' @param separateIdInto    Character vector, names of new columns into which the ID varibales (e.g. sample name from instrument seperated by \code{sep})
+#' @param subsetcol         Character, column of \code{peak_df} used for subsetting (usually the substrate used in reaction.)
 #' @param sep               Character, seperation character for sample names in "ID" column
 #'
 #' @return
@@ -22,6 +23,7 @@ generate_resultdf <- function(peak_df,
                               tol, 
                               totalInt_varNames = c("Erb", "Neu", "Ab"), 
                               separateIdInto = c("Substrate", "Type", "Condition"),
+                              subsetcol =  separateIdInto[1],
                               sep = "_") {
   cat("\n", AlzTools::timeNowHM(), "Generating result data.frame...\n")
   label_df <- peak_df %>%
@@ -29,6 +31,7 @@ generate_resultdf <- function(peak_df,
                     into = separateIdInto, 
                     sep = sep) %>%
     AssaySupport::assign_species(peak_df = ., 
+                                 subsetcol = subsetcol,
                                  speciesdf = speciesdf, 
                                  tol = tol, 
                                  mzcol = "mz")

@@ -7,7 +7,8 @@
 preprocess_spectra(spec = spectra, smooth_meth = "SavitzkyGolay",
   smooth_halfWindowSize = 20, norm_meth = "TIC",
   filter_spectra = "Cal|D1|D2|CAL", baseline_meth = "TopHat",
-  align = FALSE)
+  avg_method = "mean", align = c("none", "before", "after", "both"),
+  alignMethod = "linear")
 }
 \arguments{
 \item{spec}{List of \code{MALDIquant::MassSpectrum}}
@@ -22,7 +23,11 @@ preprocess_spectra(spec = spectra, smooth_meth = "SavitzkyGolay",
 
 \item{baseline_meth}{Character, baseline removal method see \code{MALDIquant::removeBaseline}}
 
-\item{align}{Logical, perform alignment.}
+\item{avg_method}{Character, aggregation method used to generate average spectra. See \code{MALDIquant::averageMassSpectra}.}
+
+\item{align}{Chacter vector, perform alignment before, after or both, before and after aggregation.}
+
+\item{alignMethod}{Character, Alignment method (see \code{MALDIquant::alignSpectra}.)}
 }
 \value{
 List of preprocessed \code{MALDIquant::MassSpectrum}
@@ -37,6 +42,6 @@ test_spectra_proc <- AssaySupport::preprocess_spectra(spec = test_spectra,
                                                       norm_meth = "TIC",
                                                       filter_spectra = NA,
                                                       baseline_meth = "TopHat",
-                                                      align = FALSE)
+                                                      align = "none")
 
 }

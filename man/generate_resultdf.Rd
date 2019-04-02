@@ -6,7 +6,7 @@
 \usage{
 generate_resultdf(peak_df, speciesdf, tol, totalInt_varNames = c("Erb",
   "Neu", "Ab"), separateIdInto = c("Substrate", "Type", "Condition"),
-  sep = "_")
+  subsetcol = separateIdInto[1], sep = "_")
 }
 \arguments{
 \item{peak_df}{Data.frame containing peak data as generate by \code{generate_peakdf}}
@@ -21,6 +21,8 @@ generate_resultdf(peak_df, speciesdf, tol, totalInt_varNames = c("Erb",
 \item{totalInt_varNames}{Character vector, names of variables to sum up for total intensity (e.g. part of product name: "Ab")}
 
 \item{separateIdInto}{Character vector, names of new columns into which the ID varibales (e.g. sample name from instrument seperated by \code{sep})}
+
+\item{subsetcol}{Character, column of \code{peak_df} used for subsetting (usually the substrate used in reaction.)}
 
 \item{sep}{Character, seperation character for sample names in "ID" column}
 }

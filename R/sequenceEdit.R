@@ -126,7 +126,7 @@ generate_assigndf <- function(sequencelist,
                                                   AICD = list(start = 49:50, end = nchar(sequencelist[[1]]), charge = 1:2),
                                                   Substrate = list(start = 1, end = nchar(sequencelist[[1]]), charge = 1:2))) {
   
-  res_df <- data.frame(Sequence = noSubstrateName,
+  res_df <- data.frame(Substrate = noSubstrateName,
                        Species = "Substrate",
                        mz = 0, 
                        stringsAsFactors = FALSE)
@@ -147,7 +147,7 @@ generate_assigndf <- function(sequencelist,
                               mode = "avg", 
                               IAA = FALSE, 
                               unlist = TRUE)
-      res_df <- rbind(res_df, data.frame(Sequence = seqName, Species = names(res), mz = res, stringsAsFactors = FALSE))
+      res_df <- rbind(res_df, data.frame(Substrate = seqName, Species = names(res), mz = res, stringsAsFactors = FALSE))
     }
     
   }

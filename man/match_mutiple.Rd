@@ -7,7 +7,7 @@
 match_mutiple(x, vec, tol = Inf, n = 1)
 }
 \arguments{
-\item{x}{numeric vector or value, value(s) to match}
+\item{x}{numeric, value to match}
 
 \item{vec}{numeric vector, to match \code{x} against}
 

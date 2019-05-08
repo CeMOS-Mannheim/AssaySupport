@@ -4,16 +4,19 @@
 \alias{match_mutiple}
 \title{Relaxed value matching with multiple results}
 \usage{
-match_mutiple(x, vec, tol = Inf, n = 1)
+match_mutiple(x, vec, tol = Inf, n = 1, tol_ppm = FALSE)
 }
 \arguments{
 \item{x}{numeric, value to match}
 
 \item{vec}{numeric vector, to match \code{x} against}
 
-\item{tol}{numeric, tolerance for matching}
+\item{tol}{numeric, tolerance for matching. 
+Multiply with 1e-6 and set \code{tol_ppm} to use relative tolerance.}
 
 \item{n}{numeric, maximal number of matches. Set to "all" for all matches within \code{tol}}
+
+\item{tol_ppm}{logical, set to \code{TRUE} if \code{tol} should be used as ppm.}
 }
 \value{
 Integer vector, indeces of \code{vec} matching \code{x}.

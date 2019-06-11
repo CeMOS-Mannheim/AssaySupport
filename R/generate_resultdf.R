@@ -6,6 +6,7 @@
 #'                            "Species"    Character, the name of the species 
 #'                            "mz"         Numeric, m/z of species.
 #' @param tol               Numeric, tolerance for assignment.
+#' @param tolppm            Logical, use relative tolerance in ppm. Supply \code{tol} as e.g. 100e-6
 #' @param totalInt_varNames Character vector, names of variables to sum up for total intensity (e.g. part of product name: "Ab")
 #' @param separateIdInto    Character vector, names of new columns into which the ID varibales (e.g. sample name from instrument seperated by \code{sep})
 #' @param subsetcol         Character, column of \code{peak_df} used for subsetting (usually the substrate used in reaction.)
@@ -21,6 +22,7 @@
 generate_resultdf <- function(peak_df, 
                               speciesdf, 
                               tol, 
+                              tolppm = TRUE,
                               totalInt_varNames = c("Erb", "Neu", "Ab"), 
                               separateIdInto = c("Substrate", "Type", "Condition"),
                               subsetcol =  separateIdInto[1],
@@ -34,6 +36,7 @@ generate_resultdf <- function(peak_df,
                                  subsetcol = subsetcol,
                                  speciesdf = speciesdf, 
                                  tol = tol, 
+                                 tolppm = tolppm,
                                  mzcol = "mz")
   
   res_df <- label_df %>%

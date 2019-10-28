@@ -10,6 +10,11 @@
 #' Removed T from linker region (see \code{C99_3xFLAG}) to shift masses away from contaminations at mass of AICD50-99 and Abeta1-38. 
 "C99_deltaT"
 
+#' Common products of GSEC activity on C99_deltaT
+#' 
+#' Includes all Abetas starting from 1 or 11 and ending in the range of 37:49 as well as AICDs and Species the latter each as [M+H]+ and [M+H2]+2
+"C99T_commonSpecies"
+
 #' Sequence of Neurexin
 #' 
 #' 121 amino acids.

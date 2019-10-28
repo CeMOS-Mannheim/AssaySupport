@@ -66,7 +66,7 @@ assign_species <- function(peak_df,
         for(c_idx in closest_idx) {
           fpeak_df[i, "species"] <- paste(pull(fmzlist, speciescol)[closest_idx], collapse = ", ")
           fpeak_df[i, "mz.theo"] <- fmzlist[c_idx, mzcol]
-          fpeak_df[i, "mz.diff"] <- round(abs(fmzlist[c_idx,mzcol] - mz),1)
+          fpeak_df[i, "mz.diff"] <- round((fmzlist[c_idx,mzcol] - mz),4)
           fpeak_df[i, "mz.diff.ppm"] <- round(abs(fmzlist[c_idx,mzcol] - mz)/mz*1e6,1)
         }
       }

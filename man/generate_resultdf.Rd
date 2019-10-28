@@ -4,8 +4,9 @@
 \alias{generate_resultdf}
 \title{Generate result data.frame containing species found in supplied list}
 \usage{
-generate_resultdf(peak_df, speciesdf, tol, totalInt_varNames = c("Erb",
-  "Neu", "Ab"), separateIdInto = c("Substrate", "Type", "Condition"),
+generate_resultdf(peak_df, speciesdf, tol, tolppm = TRUE,
+  totalInt_varNames = c("Erb", "Neu", "Ab"),
+  separateIdInto = c("Substrate", "Type", "Condition"),
   subsetcol = separateIdInto[1], sep = "_")
 }
 \arguments{
@@ -17,6 +18,8 @@ generate_resultdf(peak_df, speciesdf, tol, totalInt_varNames = c("Erb",
 "mz"         Numeric, m/z of species.}
 
 \item{tol}{Numeric, tolerance for assignment.}
+
+\item{tolppm}{Logical, use relative tolerance in ppm. Supply \code{tol} as e.g. 100e-6}
 
 \item{totalInt_varNames}{Character vector, names of variables to sum up for total intensity (e.g. part of product name: "Ab")}
 

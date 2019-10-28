@@ -5,10 +5,16 @@
 \title{Preprocess spectra}
 \usage{
 preprocess_spectra(spec = spectra, smooth_meth = "SavitzkyGolay",
-  smooth_halfWindowSize = 20, norm_meth = "TIC",
-  filter_spectra = "Cal|D1|D2|CAL", baseline_meth = "TopHat",
-  avg_method = "mean", align = c("none", "before", "after", "both"),
-  alignMethod = "linear")
+  smooth_halfWindowSize = 20, norm_meth = c("TIC", "IS", "none"),
+  lockMass_species = NA, lockMass_tol = 250, lockMass_tolPPM = TRUE,
+  IS_species = lockMass_species, IS_tol = lockMass_tol,
+  IS_tolPPM = lockMass_tolPPM, filter_spectra = "Cal|D1|D2|CAL",
+  baseline_meth = "TopHat", avg_method = c("mean", "median", "sum",
+  NA), align = c("none", "before", "after", "both"),
+  align_Method = "linear", align_SNR = 2,
+  align_pickMeth = "SuperSmoother", align_minFreq = 0.25,
+  align_tol = 0.01, species_df = C99T_commonSpecies,
+  allowNoMatch = TRUE)
 }
 \arguments{
 \item{spec}{List of \code{MALDIquant::MassSpectrum}}
@@ -17,7 +23,22 @@ preprocess_spectra(spec = spectra, smooth_meth = "SavitzkyGolay",
 
 \item{smooth_halfWindowSize}{Numeric, halfWindowSize for smoothing method see \code{MALDIquant::smoothIntensity()}}
 
-\item{norm_meth}{Character, normalization method see \code{MALDIquant::calibrateIntensity()}}
+\item{norm_meth}{Character, normalization method see \code{MALDIquant::calibrateIntensity()}.
+Additional to the options that MALDIquant provides for normalization it is also possible to normalize to a internal standard ("IS").
+To use this option \code{IS_species} and \code{IS_tol} has to be set and a \code{species_df} has to be provided (see \code{AssaySupport::generate_assigndf()}).}
+
+\item{lockMass_species}{Character, name of the species to use as lock mass. See \code{generate_resultdf}. 
+Set to \code{NA} if no mass recalibartion should be performed.}
+
+\item{lockMass_tol}{Numeric, tolerance for lock mass species assignment.}
+
+\item{lockMass_tolPPM}{Logical, use the \code{lockMass_tol} as ppm.}
+
+\item{IS_species}{Character, name of the species to use as internal standard for normalization. See \code{generate_resultdf}.}
+
+\item{IS_tol}{Numeric, tolerance for internal standard species assignment.}
+
+\item{IS_tolPPM}{Logical, use the \code{IS_tol} as ppm.}
 
 \item{filter_spectra}{Character vector, regex of patterns to exclude spectra (like calibration spectra in same folder)}
 
@@ -27,7 +48,19 @@ preprocess_spectra(spec = spectra, smooth_meth = "SavitzkyGolay",
 
 \item{align}{Chacter vector, perform alignment before, after or both, before and after aggregation.}
 
-\item{alignMethod}{Character, Alignment method (see \code{MALDIquant::alignSpectra}.)}
+\item{align_Method}{Character, Alignment method (see \code{MALDIquant::alignSpectra}).}
+
+\item{align_SNR}{Numeric, SNR for peak picking (see \code{MALDIquant::alignSpectra}).}
+
+\item{align_pickMeth}{Character, Peak picking method (see \code{MALDIquant::alignSpectra}).}
+
+\item{align_minFreq}{Character, minimal peak frequency (see \code{MALDIquant::alignSpectra}).}
+
+\item{align_tol}{Character, tolerance to consider peak as identical (see \code{MALDIquant::alignSpectra}).}
+
+\item{species_df}{Data.frame, see \code{generate_assigndf}.}
+
+\item{allowNoMatch}{Logical, spectra with no match for IS normalization or lock mass calibration will be excluded. If \code{FALSE} method will stop if no match can be found.}
 }
 \value{
 List of preprocessed \code{MALDIquant::MassSpectrum}

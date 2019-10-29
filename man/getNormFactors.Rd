@@ -4,25 +4,36 @@
 \alias{getNormFactors}
 \title{Get normalization factors for a specific species}
 \usage{
-getNormFactors(peaksdf, speciesdf, targetSpecies, tol, tolppm = TRUE,
-  allowNoMatch = TRUE)
+getNormFactors(peaksdf, targetSpecies, tol, speciesdf = NA,
+  tolppm = TRUE, allowNoMatch = TRUE)
 }
 \arguments{
 \item{peaksdf}{Data.frame, see \code{AssaySupport::generate_peakdf}.}
 
-\item{speciesdf}{Data.frame, see \code{AssaySupport::generate_assigndf}.}
-
-\item{targetSpecies}{Character, name of species for which the normalization factors should be extracted.}
+\item{targetSpecies}{Character or Numeric, name of species for which the normalization factors should be extracted.
+Or, if numeric, use mz to match species.}
 
 \item{tol}{Numeric, tolerance in Dalton or (if \code{tolppm = TRUE}) ppm}
+
+\item{speciesdf}{Data.frame, see \code{AssaySupport::generate_assigndf}.}
 
 \item{tolppm}{Logical, use tolerance in ppm.}
 
 \item{allowNoMatch}{Logical, exclude spectra where \code{targetSpecies} was not found.}
 }
 \value{
-Numeric vector of normalization factors.
+List with two entries
+norm_factor: Numeric vector of normalization factors per spectrum.
+specIdx: Numeric vector of spectra indicies for which the targetSpecies was found
 }
 \description{
 Get normalization factors for a specific species
+}
+\examples{
+plot(test_spectra_proc[[1]], xlim = c(3000,4000))
+peakdf <- generate_peakdf(test_spectra_proc)
+norm <- getNormFactors(peakdf, targetSpecies = 3316.4, tol = 100)
+norm_spec <- normalizeByFactor(test_spectra_proc, norm$norm_factor)
+plot(norm_spec[[1]], xlim = c(3000,4000))
+
 }

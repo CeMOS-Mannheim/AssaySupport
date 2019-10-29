@@ -2,15 +2,21 @@
 #'
 #' @param peaksdf       Data.frame, see \code{AssaySupport::generate_peakdf}.
 #' @param speciesdf     Data.frame, see \code{AssaySupport::generate_assigndf}.
-#' @param targetSpecies Character or Numeric, name of species for which the normalization factors should be extracted.
-#'                      Or, if numeric, mz of species used for normalization.
+#' @param targetSpecies Character or Numeric, name of species for which the mz shift should be extracted.
+#'                      Or, if numeric, use mz to match species.
 #' @param tol           Numeric, tolerance in Dalton or (if \code{tolppm = TRUE}) ppm
 #' @param tolppm        Logical, use tolerance in ppm.
 #' @param allowNoMatch  Logical, exclude spectra where \code{targetSpecies} was not found.
 #'
 #' @return
-#' Numeric vector of normalization factors.
+#' List with two entries
+#' mzshift: Numeric vector of mz shift per spectrum.
+#' specIdx: Numeric vector of spectra indicies for which the targetSpecies was found.
+#' 
+#' @importFrom dplyr mutate arrange filter
+#' 
 #' @export
+#' 
 
 getMzShift <- function(peaksdf, tol, targetSpecies, speciesdf = NA, tolppm = TRUE, allowNoMatch = TRUE) {
   if(is.character(targetSpecies)) {

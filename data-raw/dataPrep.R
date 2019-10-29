@@ -23,7 +23,8 @@ test_peak_df <- AssaySupport::generate_peakdf(test_spectra_proc,
 
 test_result_df <- generate_resultdf(test_peak_df, 
                                     test_Ablist, 
-                                    tol = 5)
+                                    tol = 700, 
+                                    tolppm = TRUE)
 
 # _c99_sarah.sqs: old sequence 
 C99_3xFLAG <- c(C99 = "DAEFRHDSGYEVHHQKLVFFAEDVGSNKGAIIGLMVGGVVIATVIVITLVMLKKKQYTSIHHGVVEVDAAVTPEERHLSKMQQNGYENPTYKFFEQMQNGSDYKDHDGDYKDHDIDYKDDDDKGTLEVLFQ")

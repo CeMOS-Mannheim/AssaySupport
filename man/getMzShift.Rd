@@ -12,8 +12,8 @@ getMzShift(peaksdf, tol, targetSpecies, speciesdf = NA, tolppm = TRUE,
 
 \item{tol}{Numeric, tolerance in Dalton or (if \code{tolppm = TRUE}) ppm}
 
-\item{targetSpecies}{Character or Numeric, name of species for which the normalization factors should be extracted.
-Or, if numeric, mz of species used for normalization.}
+\item{targetSpecies}{Character or Numeric, name of species for which the mz shift should be extracted.
+Or, if numeric, use mz to match species.}
 
 \item{speciesdf}{Data.frame, see \code{AssaySupport::generate_assigndf}.}
 
@@ -22,7 +22,9 @@ Or, if numeric, mz of species used for normalization.}
 \item{allowNoMatch}{Logical, exclude spectra where \code{targetSpecies} was not found.}
 }
 \value{
-Numeric vector of normalization factors.
+List with two entries
+mzshift: Numeric vector of mz shift per spectrum.
+specIdx: Numeric vector of spectra indicies for which the targetSpecies was found.
 }
 \description{
 Get normalization factors for a specific species

@@ -65,7 +65,7 @@ preprocess_spectra <- function(spec = spectra,
     if(is.na(IS_species) | dim(species_df)[2] < 1) {
       stop("IS_species and species_df must be provided for IS normalization.\n")
     }
-    if(!(IS_species %in% species_df$Species)) {
+    if(is.character(IS_species) & !(IS_species %in% species_df$Species)) {
       stop("IS_species not containied in species_df.\n")
     }
   }

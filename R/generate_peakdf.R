@@ -16,7 +16,8 @@ generate_peakdf <- function(spectra,
                             pick_meth = "SuperSmoother",
                             halfWindowSize = 10, 
                             SNR = 3, 
-                            binpeaks = FALSE) {
+                            binpeaks = FALSE,
+                            binTol = 50e-6) {
   peaks <- MALDIquant::detectPeaks(spectra, method = pick_meth, SNR = SNR, halfWindowSize = halfWindowSize)
   if(MALDIquant::isMassSpectrum(spectra)) {
     spectra <- list(spectra)
@@ -28,7 +29,7 @@ generate_peakdf <- function(spectra,
   }
   
   if(binpeaks) {
-    peaks <- MALDIquant::binPeaks(peaks)
+    peaks <- MALDIquant::binPeaks(peaks, tolerance = binTol)
   }
   
   names(peaks) <- names(spectra)

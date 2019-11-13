@@ -28,16 +28,17 @@ write_peak_list <-function(df,
 #'
 #' @export
 write_msd <- function(spectra = spectra_align, 
-                      Dir = parentDir, 
+                      Dir, 
                       spectraNames = unique(paste0(names(spectra))),
-                      namePrefix = namePrefix,
-                      peaks = peaks,
+                      namePrefix = "",
+                      peaks = NA,
                       annotation_df = NA) {
   if(is.data.frame(annotation_df) && is.na(peaks[1])) {
     stop("Annotation only possible if peaks are supplied.")
   }
   cat("\n", AlzTools::timeNowHM(), "Writing avg spectra to disk...\n")
   # export spectra
+  counter <- 0
   for(i in 1:length(spectra)) {
     current_file <- file.path(Dir,paste0(namePrefix, "_", spectraNames[i], "_avg.msd"))
     if(!is.na(peaks[1])) {
@@ -62,13 +63,22 @@ write_msd <- function(spectra = spectra_align,
       }
       for(j in 1:nrow(current_df))
       annotate_msd_peak(file = current_file, 
-                        label = current_df[j, "species"] %>% dplyr::pull(), 
-                        peaks = c(current_df[j, "mz",] %>% dplyr::pull(),  current_df[j, "int"] %>% dplyr::pull()), 
+                        label = current_df[j, "species"] %>% 
+                          dplyr::pull(), 
+                        peaks = c(current_df[j, "mz",] %>% 
+                                    dplyr::pull(),  
+                                  current_df[j, "int"] %>% 
+                                    dplyr::pull()), 
                         peakIdx = NA, 
-                        theoMz =  current_df[j, "mz.theo"] %>% dplyr::pull())
+                        theoMz =  current_df[j, "mz.theo"] %>% 
+                          dplyr::pull())
       
     }
-    
+    svMisc::progress(counter/length(spectra)*100)
+    counter = counter + 1
+    if(counter == length(spectra)) {
+      cat("\n")
+    }
   }
   
 }

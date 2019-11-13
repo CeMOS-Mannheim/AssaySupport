@@ -49,6 +49,7 @@ load_spectra <- function(Dir, filter = c("Cal", "cal", "CAL"), nameSpectra = TRU
     }
     
   }
+  cat("\n")
 
 return(spectra)
 }

@@ -1,5 +1,5 @@
 ## helper to add protons 
-addAtom <- function(element_list, charge = 1, element = "H") {
+addAtom <- function(element_list, element, charge = 1) {
   if(is.null(element_list[[element]])) {
     element_list[[element]] <- 0
   }
@@ -41,7 +41,7 @@ getMassOfSequece <- function(sequence, charge = 1, mode = "avg", IAA = FALSE, un
   for(i in 1:length(sequencelist)) {
     for(j in 1:length(charge)) {
       counter <- counter + 1
-      element_list <- addAtom(OrgMassSpecR::ConvertPeptide(sequencelist[[i]], IAA = IAA), 
+      element_list <- addAtom(OrgMassSpecR::ConvertPeptide(sequencelist[[i]], IAA = IAA), element = "H",
                                 charge = charge[j])
       
       switch (mode,

@@ -73,6 +73,9 @@ getNormFactors <- function(peaksdf, targetSpecies, tol, speciesdf = NA, tolppm =
   } else {
     specIdx <- plot_Idx
   }
+  if(length(specIdx) < 1) {
+    stop("Could not find targetSpecies in any spectrum! Consider adjusting tol.\n")
+  }
   return(list(norm_factor = pull(f_resdf, int),
               specIdx = specIdx))
 }

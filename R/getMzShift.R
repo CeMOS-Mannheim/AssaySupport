@@ -36,6 +36,8 @@ getMzShift <- function(peaksdf, tol, targetSpecies, speciesdf = NA, tolppm = TRU
   resdf <- generate_resultdf(peaksdf, speciesdf = speciesdf, tolppm = TRUE, tol = tol)
   f_resdf <- resdf %>%
     filter(species == targetSpecies) %>%
+    group_by(plot_Idx) %>%
+    filter(abs(mz.diff) == min(abs(mz.diff))) %>%
     arrange(plotIdx)
   } else {
     if(tolppm) {
@@ -44,6 +46,8 @@ getMzShift <- function(peaksdf, tol, targetSpecies, speciesdf = NA, tolppm = TRU
       f_resdf <- resdf %>%
         filter(match) %>%
         mutate(mz.diff = round(targetSpecies - mz, 4)) %>%
+        group_by(plotIdx) %>%
+        filter(abs(mz.diff) == min(abs(mz.diff))) %>%
         arrange(plotIdx)
     } else {
   resdf <- peaksdf %>%
@@ -51,12 +55,14 @@ getMzShift <- function(peaksdf, tol, targetSpecies, speciesdf = NA, tolppm = TRU
   f_resdf <- resdf %>%
     filter(match) %>%
     mutate(mz.diff = round(targetSpecies - mz, 4)) %>%
+    group_by(plotIdx) %>%
+    filter(abs(mz.diff) == min(abs(mz.diff))) %>%
     arrange(plotIdx)
     }
   }
   
   if(!all(plot_Idx %in% (f_resdf %>% pull(plotIdx)))){
-    if(!exclude) {
+    if(!allowNoMatch) {
       stop("Could not find ", targetSpecies, " for all spectra! Consider adjusting tol.\n")
     }
     warning("Could not find ", targetSpecies, " in spectrum ", paste(which(!(plot_Idx %in% (f_resdf %>% pull(plotIdx)))), collapse = ", "), ".\n")
@@ -64,6 +70,10 @@ getMzShift <- function(peaksdf, tol, targetSpecies, speciesdf = NA, tolppm = TRU
   } else {
     specIdx <- plot_Idx
   }
+  if(length(specIdx) < 1) {
+    stop("Could not find targetSpecies in any spectrum! Consider adjusting tol.\n")
+  }
+  
   return(list(mzshift = pull(f_resdf, mz.diff),
               specIdx = specIdx))
 }

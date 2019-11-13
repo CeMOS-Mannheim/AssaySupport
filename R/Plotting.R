@@ -4,8 +4,7 @@
 #' @param x subseting value
 #'
 #' @return max value
-get_max <- function(labels_df,
-                    x) {
+get_max <- function(labels_df, x) {
   max(labels_df[grepl(x, labels_df$species),"int"])
 }
 

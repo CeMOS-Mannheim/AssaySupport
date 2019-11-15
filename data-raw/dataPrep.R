@@ -1,3 +1,5 @@
+library(AssaySupport)
+
 parentDir <- "C:/Users/tenzl/Documents/AssaySupport/data-raw/"
 
 test_Ablist <- readxl::read_xlsx("C:/Users/tenzl/Documents/AssaySupport/data-raw/c99_erbb4_neurexin.xlsx")
@@ -33,9 +35,9 @@ C99_deltaT <- c(C99T = "DAEFRHDSGYEVHHQKLVFFAEDVGSNKGAIIGLMVGGVVIATVIVITLVMLKKKQ
 
 # Substrates for Maria
 Neurexin   <- c(Neurexin = "DAEFRVIRESSSTTGMVVGIVAAAALCILILLYAMYKYRNRDEGSYQVDETRNYISNSAQSNGTLMKEKQASSKSGHKKQKNKDKEYYVGSDYKDHDGDYKDHDIDYKDDDDKGTLEVLFQ")
-ErbB4      <- c(ErbB4 = "IYYPWTGHSTLPQHARTPLIAAGVIGGLFILVIVGLTFAVYVRRKSIKKKRALRRFLETELVEPLTPSGTAYPYDVPDYASLGGPDYKDHDGDYKDHDIDYKDDDDK")
+ErbB4      <- c(ErbB4 = "DAEFRCIYYPWTGHSTLPQHARTPLIAAGVIGGLFILVIVGLTFAVYVRRKSIKKKRALRRFLETELVEPLTPSGTAGSDYKDHDGDYKDHDIDYKDDDDKGTLEVLFQ")
 EphA4      <- c(EphA4 = "TNTVPSRIIGDGANSTVLLVSVSGSVVLVVILIAAFVISRRRSKYSKAKQEADEEKHLNQGVRTDYKDHDGDYKDHDIDYKDDDDK")
-#N_Cadherin <- c(N_Cadherin = "")
+NCadherin <- c(NCadherin = "DAEFRVDRIVGAGLGTGAIIAILLCIIILLILVLMFVVWMKRRDKERQAKQLLIDPEDDVRDNILKYDEEGGGEEDQGSDYKDHDGDYKDHDIDYKDDDDKGTLEVLFQ")
 
 
 C99_mutations <- data.frame(name = c("Tottori", "Flemish", "Iowa", "Arctic", "Dutch", "Iberian"),
@@ -57,5 +59,5 @@ C99T_commonSpecies <- generate_assigndf(C99_deltaT, fragmentList = list(Ab = lis
 usethis::use_data(test_Ablist, test_spectra, test_spectra_proc, test_peaks, test_peak_df, test_result_df,
                   C99_3xFLAG, C99_deltaT, C99_mutations, 
                   C99T_commonSpecies,
-                  Neurexin, ErbB4, EphA4,
+                  Neurexin, ErbB4, EphA4, NCadherin,
                   overwrite = TRUE)

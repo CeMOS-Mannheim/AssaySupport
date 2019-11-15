@@ -6,6 +6,8 @@
 #'                            "Species"    Character, the name of the species 
 #'                            "mz"         Numeric, m/z of species.
 #' @param tol               Numeric, tolerance for assignment.
+#' @param highMz      Numeric, if provided a second tolerance (\code{highMzTol}) for \code{mz >= highMz} will be used.
+#' @param highMzTol   Numeric, tolerance for assignment for \code{mz >= highMz} either in Da or ppm.
 #' @param tolppm            Logical, use relative tolerance in ppm. Supply \code{tol} as e.g. 100e-6
 #' @param totalInt_varNames Character vector, names of variables to sum up for total intensity (e.g. part of product name: "Ab")
 #' @param separateIdInto    Character vector, names of new columns into which the ID varibales (e.g. sample name from instrument seperated by \code{sep})
@@ -21,7 +23,9 @@
 
 generate_resultdf <- function(peak_df, 
                               speciesdf, 
-                              tol, 
+                              tol,
+                              highMz = NA,
+                              highMzTol = NA,
                               tolppm = TRUE,
                               totalInt_varNames = c("Erb", "Neu", "Ab"), 
                               separateIdInto = c("Substrate", "Type", "Condition"),
@@ -36,6 +40,8 @@ generate_resultdf <- function(peak_df,
                                  subsetcol = subsetcol,
                                  speciesdf = speciesdf, 
                                  tol = tol, 
+                                 highMz = highMz,
+                                 highMzTol = highMzTol,
                                  tolppm = tolppm,
                                  mzcol = "mz")
   

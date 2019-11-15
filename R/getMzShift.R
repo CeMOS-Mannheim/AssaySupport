@@ -36,7 +36,7 @@ getMzShift <- function(peaksdf, tol, targetSpecies, speciesdf = NA, tolppm = TRU
   resdf <- generate_resultdf(peaksdf, speciesdf = speciesdf, tolppm = TRUE, tol = tol)
   f_resdf <- resdf %>%
     filter(species == targetSpecies) %>%
-    group_by(plot_Idx) %>%
+    group_by(plotIdx) %>%
     filter(abs(mz.diff) == min(abs(mz.diff))) %>%
     arrange(plotIdx)
   } else {

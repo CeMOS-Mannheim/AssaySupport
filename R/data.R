@@ -23,7 +23,7 @@
 
 #' Sequence of ErbB4
 #' 
-#' 107 amino acids.
+#' 109 amino acids.
 #' Alternative Substrate of GSEC.
 "ErbB4"
 
@@ -32,6 +32,12 @@
 #' 86 amino acids.
 #' Alternative Substrate of GSEC.
 "EphA4"
+
+#' Sequence of N-Cadherin
+#' 
+#' 109 amino acids.
+#' Alternative Substrate of GSEC.
+"NCadherin"
 
 #' Alzheimer's causing mutations in APP (C99).
 #' 

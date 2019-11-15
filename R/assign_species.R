@@ -7,7 +7,9 @@
 #'                            "mz"         Numeric, m/z of species.
 #'                    Column names can be changed but have to be specified in thid case by \code{subset.col, species.col, mz.col}
 #' @param subsetcol   Character, name of column in \code{speciesdf} to subset data by (eg. "Substrate") 
-#' @param tol         Numeric, tolerance for assignment 
+#' @param highMz      Numeric, if provided a second tolerance (\code{highMzTol}) for \code{mz >= highMz} will be used.
+#' @param tol         Numeric, tolerance for assignment either in Da or ppm.
+#' @param highMzTol   Numeric, tolerance for assignment for \code{mz >= highMz} either in Da or ppm.
 #' @param tolppm      Logical, use relative tolerance in ppm (\code{tol} is multiplied by 1e-6 internally).
 #' @param speciescol  Character, name of column in \code{speciesdf} containing names of species
 #' @param mzcol       Character, name of column in \code{speciesdf} containing m/z of species
@@ -19,11 +21,18 @@
 assign_species <- function(peak_df, 
                            speciesdf, 
                            subsetcol = "Substrate",
+                           highMz = NA,
                            tol = 5, 
+                           highMzTol = NA,
                            tolppm = FALSE,
                            speciescol = "Species", 
                            mzcol = "mz", 
                            append = TRUE) {
+  if(!is.na(highMz)) {
+    if(is.na(highMzTol)) {
+      stop("No highMzTol provided!\n")
+    }
+  }
   
   speciesdf <- dplyr::as_tibble(speciesdf)
   peak_df <- dplyr::as_tibble(peak_df)
@@ -34,10 +43,11 @@ assign_species <- function(peak_df,
   }
   
   res_df <- c()
-  for(sub in subsets) {
+  original_tol <- tol # store original tol in case tol gets overwritten with high tol
+  for(sub in subsets) { 
     if(!is.na(subsetcol)) { 
       fmzlist <- speciesdf[speciesdf[,subsetcol] == sub,]
-      fpeak_df <- data.frame(peak_df[peak_df[,subsetcol] == sub,],
+      fpeak_df <- data.frame(peak_df[peak_df[,subsetcol] == sub,], # prepare peakdf with empty cols for species assigment 
                              species = NA,
                              mz.theo = NA,
                              mz.diff = NA,
@@ -51,10 +61,18 @@ assign_species <- function(peak_df,
                              mz.diff.ppm = NA) %>% dplyr::as_tibble()
     }
     
-    for(i in 1:dim(fpeak_df[, mzcol])[1]) {                
+    for(i in 1:dim(fpeak_df[, mzcol])[1]) {  
+      tol <- original_tol # restore orginal tol at the start of each iteration
       mz <- fpeak_df[[i, mzcol]]
       closest_idx <-  AlzTools::getClosest(dplyr::pull(fmzlist, mzcol), mz)
       closest_mz <- dplyr::pull(fmzlist, mzcol)[closest_idx]
+      
+      if(!is.na(highMz)) {
+        if(mz >= highMz) {
+          tol <- highMzTol
+          
+        }
+      }
       
       if(tolppm) {
         tol_ <- mz * tol * 1e-6

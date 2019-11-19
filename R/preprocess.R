@@ -19,6 +19,7 @@
 #' @param align                 Chacter vector, perform alignment before, after or both, before and after aggregation.
 #' @param align_Method          Character, Alignment method (see \code{MALDIquant::alignSpectra}).
 #' @param align_SNR             Numeric, SNR for peak picking (see \code{MALDIquant::alignSpectra}).
+#' @param ISlockMass_SNR        Numeric, SNR for detection of the IS/lock mass.
 #' @param align_pickMeth        Character, Peak picking method (see \code{MALDIquant::alignSpectra}).
 #' @param align_minFreq         Character, minimal peak frequency (see \code{MALDIquant::alignSpectra}).
 #' @param align_tol             Character, tolerance to consider peak as identical (see \code{MALDIquant::alignSpectra}).
@@ -52,6 +53,7 @@ preprocess_spectra <- function(spec = spectra,
                                align = c("none", "before", "after", "both"),
                                align_Method = "linear",
                                align_SNR = 2,
+                               ISlockMass_SNR = 3, 
                                align_pickMeth = "SuperSmoother",
                                align_minFreq = 0.25,
                                align_tol = 0.01,
@@ -94,7 +96,7 @@ preprocess_spectra <- function(spec = spectra,
          },
          IS = {
            peak_df <- generate_peakdf(spectra = spec, 
-                                      SNR = 3)
+                                      SNR = ISlockMass_SNR)
            norm_fac <- getNormFactors(peaksdf = peak_df,
                                       speciesdf = species_df, 
                                       targetSpecies = IS_species, 
@@ -130,7 +132,7 @@ preprocess_spectra <- function(spec = spectra,
   
   if(!is.na(lockMass_species)) {
     peak_df <- generate_peakdf(spectra = spec, 
-                               SNR = 3)
+                               SNR = ISlockMass_SNR)
     mzshift <- getMzShift(peak_df, 
                           speciesdf = species_df, 
                           targetSpecies = lockMass_species, 

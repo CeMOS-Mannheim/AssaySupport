@@ -11,7 +11,7 @@ preprocess_spectra(spec = spectra, smooth_meth = "SavitzkyGolay",
   IS_tolPPM = lockMass_tolPPM, filter_spectra = "Cal|D1|D2|CAL",
   baseline_meth = "TopHat", avg_method = c("mean", "median", "sum",
   NA), align = c("none", "before", "after", "both"),
-  align_Method = "linear", align_SNR = 2,
+  align_Method = "linear", align_SNR = 2, ISlockMass_SNR = 3,
   align_pickMeth = "SuperSmoother", align_minFreq = 0.25,
   align_tol = 0.01, species_df = C99T_commonSpecies,
   allowNoMatch = TRUE)
@@ -51,6 +51,8 @@ Set to \code{NA} if no mass recalibartion should be performed.}
 \item{align_Method}{Character, Alignment method (see \code{MALDIquant::alignSpectra}).}
 
 \item{align_SNR}{Numeric, SNR for peak picking (see \code{MALDIquant::alignSpectra}).}
+
+\item{ISlockMass_SNR}{Numeric, SNR for detection of the IS/lock mass.}
 
 \item{align_pickMeth}{Character, Peak picking method (see \code{MALDIquant::alignSpectra}).}
 

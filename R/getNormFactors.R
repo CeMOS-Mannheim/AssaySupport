@@ -42,7 +42,7 @@ getNormFactors <- function(peaksdf, targetSpecies, tol, speciesdf = NA, tolppm =
   
   
   if(is.character(targetSpecies)) {
-    resdf <- generate_resultdf(peaksdf, speciesdf = speciesdf, tolppm = TRUE, tol = tol)
+    resdf <- generate_resultdf(peaksdf, speciesdf = speciesdf %>% filter(Species == targetSpecies), tolppm = TRUE, tol = tol)
     f_resdf <- resdf %>%
       filter(species == targetSpecies) %>%
       arrange(plotIdx)

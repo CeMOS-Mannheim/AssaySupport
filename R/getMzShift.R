@@ -33,7 +33,7 @@ getMzShift <- function(peaksdf, tol, targetSpecies, speciesdf = NA, tolppm = TRU
   plot_Idx <- sort(unique(peaksdf$plotIdx))
   
   if(is.character(targetSpecies)) {
-  resdf <- generate_resultdf(peaksdf, speciesdf = speciesdf, tolppm = TRUE, tol = tol)
+  resdf <- generate_resultdf(peaksdf, speciesdf = speciesdf %>% filter(Species == targetSpecies), tolppm = TRUE, tol = tol)
   f_resdf <- resdf %>%
     filter(species == targetSpecies) %>%
     group_by(plotIdx) %>%

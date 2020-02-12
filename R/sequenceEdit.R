@@ -122,9 +122,9 @@ cutSequence <- function(sequence, start = 1, end = nchar(sequence), prefix = "Fr
 
 generate_assigndf <- function(sequencelist, 
                               noSubstrateName = "None",
-                              fragmentList = list(Ab = list(start = 1 , end = 37:49, charge = 1),
-                                                  AICD = list(start = 49:50, end = nchar(sequencelist[[1]]), charge = 1:2),
-                                                  Substrate = list(start = 1, end = nchar(sequencelist[[1]]), charge = 1:2))) {
+                              fragmentList = list(Ab = list(start = 1 , end = 37:49, charge = 1, mod = c("Ox" = 15.999, "pE" = -18.015)),
+                                                  AICD = list(start = 49:50, end = nchar(sequencelist[[1]]), charge = 1:2, mod = NA),
+                                                  Substrate = list(start = 1, end = nchar(sequencelist[[1]]), charge = 1:2, mod = NA))) {
   
   res_df <- data.frame(Substrate = noSubstrateName,
                        Species = "Substrate",
@@ -147,7 +147,19 @@ generate_assigndf <- function(sequencelist,
                               mode = "avg", 
                               IAA = FALSE, 
                               unlist = TRUE)
-      res_df <- rbind(res_df, data.frame(Substrate = seqName, Species = names(res), mz = res, stringsAsFactors = FALSE))
+      if(!any(is.na(fragmentList[[j]][[4]]))) {
+        mod_res_l <- vector("list", length = length(fragmentList[[j]][[4]]))
+        for(k in 1:length(fragmentList[[j]][[4]])) {
+          mod_res <- res + fragmentList[[j]][[4]][k]
+          names(mod_res) <- paste0(names(res), names(fragmentList[[j]][[4]])[k])
+          mod_res_l[[k]] <- mod_res
+        }
+        res <- c(res, unlist(mod_res_l))
+      }
+      res_df <- rbind(res_df, data.frame(Substrate = seqName, 
+                                         Species = names(res), 
+                                         mz = res, 
+                                         stringsAsFactors = FALSE))
     }
     
   }

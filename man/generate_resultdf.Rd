@@ -5,8 +5,8 @@
 \title{Generate result data.frame containing species found in supplied list}
 \usage{
 generate_resultdf(peak_df, speciesdf, tol, highMz = NA, highMzTol = NA,
-  tolppm = TRUE, totalInt_varNames = c("Erb", "Neu", "Ab"),
-  separateIdInto = c("Substrate", "Type", "Condition"),
+  tolppm = TRUE, nHits = 1, totalInt_varNames = c("Erb", "Neu",
+  "Ab"), separateIdInto = c("Substrate", "Type", "Condition"),
   subsetcol = separateIdInto[1], sep = "_")
 }
 \arguments{
@@ -24,6 +24,8 @@ generate_resultdf(peak_df, speciesdf, tol, highMz = NA, highMzTol = NA,
 \item{highMzTol}{Numeric, tolerance for assignment for \code{mz >= highMz} either in Da or ppm.}
 
 \item{tolppm}{Logical, use relative tolerance in ppm. Supply \code{tol} as e.g. 100e-6}
+
+\item{nHits}{Numeric, maximal number of hits whithin tolerance. Assignment only, no quantitative analysis.}
 
 \item{totalInt_varNames}{Character vector, names of variables to sum up for total intensity (e.g. part of product name: "Ab")}
 

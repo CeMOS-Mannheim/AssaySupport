@@ -22,6 +22,52 @@
 #' @examples 
 #' head(generate_resultdf(test_peak_df, test_Ablist, tol = 5))
 
+# generate_resultdf <- function(peak_df, 
+#                               speciesdf, 
+#                               tol,
+#                               highMz = NA,
+#                               highMzTol = NA,
+#                               tolppm = TRUE,
+#                               nHits = 1,
+#                               totalInt_varNames = c("Erb", "Neu", "Ab"), 
+#                               separateIdInto = c("Substrate", "Type", "Condition"),
+#                               subsetcol =  separateIdInto[1],
+#                               sep = "_") {
+#   cat("\n", AlzTools::timeNowHM(), "Generating result data.frame...\n")
+#   res_df <- tibble()
+#   
+#   for(i in 1:nHits) {
+#     label_df <- peak_df %>%
+#       tidyr::separate(ID, 
+#                       into = separateIdInto, 
+#                       sep = sep) %>%
+#       AssaySupport::assign_species(peak_df = ., 
+#                                    subsetcol = subsetcol,
+#                                    speciesdf = speciesdf, 
+#                                    tol = tol, 
+#                                    highMz = highMz,
+#                                    highMzTol = highMzTol,
+#                                    tolppm = tolppm,
+#                                    mzcol = "mz")
+#     if(nHits > 1) {
+#       res_df <- bind_rows(res_df, label_df)
+#       speciesdf <- speciesdf %>%
+#         filter(!Species %in% res_df$species)
+#     }
+#   }
+#   if(nHits > 1) {
+#     return(res_df)
+#   }
+#   
+#   res_df <- label_df %>%
+#     dplyr::filter(!is.na(species)) %>%
+#     dplyr::group_by(plotIdx) %>%
+#     dplyr::mutate(total.Ab = sum(int[grepl(paste(totalInt_varNames, collapse = "|"), species)]),
+#                   norm.tot = int/total.Ab*100)
+#   
+#   return(res_df)
+# }
+
 generate_resultdf <- function(peak_df, 
                               speciesdf, 
                               tol,
@@ -34,13 +80,19 @@ generate_resultdf <- function(peak_df,
                               subsetcol =  separateIdInto[1],
                               sep = "_") {
   cat("\n", AlzTools::timeNowHM(), "Generating result data.frame...\n")
-  res_df <- tibble()
   
-  for(i in 1:nHits) {
+  res_df <- tibble()
+  peak_df <- peak_df %>%
+    tidyr::separate(ID, 
+                    into = separateIdInto, 
+                    sep = sep)
+  
+  Idx <- peak_df %>%
+    pull(plotIdx) %>%
+    unique()
+  
+  if(nHits == 1) {
     label_df <- peak_df %>%
-      tidyr::separate(ID, 
-                      into = separateIdInto, 
-                      sep = sep) %>%
       AssaySupport::assign_species(peak_df = ., 
                                    subsetcol = subsetcol,
                                    speciesdf = speciesdf, 
@@ -49,12 +101,30 @@ generate_resultdf <- function(peak_df,
                                    highMzTol = highMzTol,
                                    tolppm = tolppm,
                                    mzcol = "mz")
-    if(nHits > 1) {
+  } else {
+    speciesdf_orig <- speciesdf
+    for(i in 1:length(Idx)) {
+      speciesdf <- speciesdf_orig
+      for(j in 1:nHits) {
+        label_df <- peak_df %>%
+          filter(plotIdx == Idx[i]) %>%
+          AssaySupport::assign_species(peak_df = ., 
+                                       subsetcol = subsetcol,
+                                       speciesdf = speciesdf, 
+                                       tol = tol, 
+                                       highMz = highMz,
+                                       highMzTol = highMzTol,
+                                       tolppm = tolppm,
+                                       mzcol = "mz")
+        
       res_df <- bind_rows(res_df, label_df)
       speciesdf <- speciesdf %>%
         filter(!Species %in% res_df$species)
+      }
     }
+    
   }
+  
   if(nHits > 1) {
     return(res_df)
   }

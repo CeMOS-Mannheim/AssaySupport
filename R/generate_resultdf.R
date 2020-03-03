@@ -105,6 +105,7 @@ generate_resultdf <- function(peak_df,
     speciesdf_orig <- speciesdf
     for(i in 1:length(Idx)) {
       speciesdf <- speciesdf_orig
+      current_res_df <- tibble()
       for(j in 1:nHits) {
         label_df <- peak_df %>%
           filter(plotIdx == Idx[i]) %>%
@@ -117,10 +118,11 @@ generate_resultdf <- function(peak_df,
                                        tolppm = tolppm,
                                        mzcol = "mz")
         
-      res_df <- bind_rows(res_df, label_df)
+        current_res_df <- bind_rows(current_res_df, label_df)
       speciesdf <- speciesdf %>%
-        filter(!Species %in% res_df$species)
+        filter(!Species %in% current_res_df$species)
       }
+      res_df <- bind_rows(res_df, current_res_df)
     }
     
   }

@@ -8,7 +8,7 @@
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr filter mutate pull %>%
 #' @importFrom tidyr separate
-#' @importFrom stringi str_detect str_remove
+#' @importFrom stringr str_detect str_remove
 #' @export
 
 readScilsCsv <- function(path, type = c("mean", "skyline", "variance")) {
@@ -20,6 +20,7 @@ readScilsCsv <- function(path, type = c("mean", "skyline", "variance")) {
   for(i in 1:length(files)) {
     spec_csv <- read.csv(file.path(path, files[i]), comment.char = "#")
     
+    # prepare the metadata part of the csv
     meta_data <- read.csv(file.path(path, files[i]), nrows = 20, header = FALSE) %>% 
       as_tibble() %>%
       filter(str_detect(V1, "#")) %>%
@@ -50,6 +51,7 @@ readScilsCsv <- function(path, type = c("mean", "skyline", "variance")) {
     norm <- meta_data %>%
       filter(str_detect(name, "Normalization")) %>%
       pull(value)
+    
     type_list <- vector("list", length(type))
     for(j in 1:length(type)) {
       typename <- switch (type[j],
@@ -59,7 +61,8 @@ readScilsCsv <- function(path, type = c("mean", "skyline", "variance")) {
       )
       specname <- paste0(type[j], "_", tools::file_path_sans_ext(files[i]))
       
-      type_list[[j]] <- MALDIquant::createMassSpectrum(mass = spec_csv$m.z, intensity = spec_csv[, typename],
+      type_list[[j]] <- MALDIquant::createMassSpectrum(mass = spec_csv$m.z, 
+                                                       intensity = spec_csv[, typename],
                                                        metaData = list(file = sourceFile, 
                                                                        name = specname,
                                                                        exportTime = exportTime,

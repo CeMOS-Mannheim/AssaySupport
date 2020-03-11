@@ -15,6 +15,11 @@
 #' Includes all Abetas starting from 1 or 11 and ending in the range of 37:49 as well as AICDs and Species the latter each as [M+H]+ and [M+H2]+2
 "C99T_commonSpecies"
 
+#' Products of GSEC activity on C99 including modified formes
+#' 
+#' Includes all Abetas starting from 1:5, 11, 17 or 19 and ending in the range of 23:49 as well as AICDs and Species the latter each as [M+H]+ and [M+H2]+2 as well as modifications.
+"C99_full"
+
 #' Sequence of Neurexin
 #' 
 #' 121 amino acids.

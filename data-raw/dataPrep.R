@@ -55,9 +55,20 @@ C99T_commonSpecies <- generate_assigndf(C99_deltaT, fragmentList = list(Ab = lis
                                                                                          end = nchar(C99_deltaT[[1]]), 
                                                                                          charge = 1:2)))
 
+C99_full <- generate_assigndf(C99_3xFLAG, 
+                            fragmentList = list(Ab = list(start = c(1:5, 11, 17, 19), end = c(23:49), 
+                                                          charge = 1, mod = c(Ox = 15.999, 
+                                                                              pE = -18.015, 
+                                                                              P = 79.9799, 
+                                                                              NO = 45)), 
+                                                AICD = list(start = 49:50, end = 99, 
+                                                            charge = 1:2, mod = NA), 
+                                                Substrate = list(start = 1, end = 99, 
+                                                                 charge = 1:2, mod = NA)))
+
 
 usethis::use_data(test_Ablist, test_spectra, test_spectra_proc, test_peaks, test_peak_df, test_result_df,
                   C99_3xFLAG, C99_deltaT, C99_mutations, 
-                  C99T_commonSpecies,
+                  C99T_commonSpecies, C99_full,
                   Neurexin, ErbB4, EphA4, NCadherin,
                   overwrite = TRUE)

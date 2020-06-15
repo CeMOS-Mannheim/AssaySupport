@@ -4,13 +4,15 @@
 \name{C99_mutations}
 \alias{C99_mutations}
 \title{Alzheimer's causing mutations in APP (C99).}
-\format{A data frame with with APP mutations. 4 variables:
+\format{
+A data frame with with APP mutations. 4 variables:
 \describe{
   \item{name}{Trivial name of mutation. Mostly location were initial case occured}
   \item{code}{Muatation code. First letter is amino acid in WT variant, position of muatation, amino acid in mutated variant}
   \item{pos}{Position of muatation. Same as in \code{code}.}
   \item{substitute}{amino acid in mutated variant. Same as in \code{code}.}
-  }}
+  }
+}
 \usage{
 C99_mutations
 }

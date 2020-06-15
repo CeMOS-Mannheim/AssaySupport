@@ -4,7 +4,9 @@
 \name{ErbB4}
 \alias{ErbB4}
 \title{Sequence of ErbB4}
-\format{An object of class \code{character} of length 1.}
+\format{
+An object of class \code{character} of length 1.
+}
 \usage{
 ErbB4
 }

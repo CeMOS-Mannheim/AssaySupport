@@ -4,7 +4,9 @@
 \name{NCadherin}
 \alias{NCadherin}
 \title{Sequence of N-Cadherin}
-\format{An object of class \code{character} of length 1.}
+\format{
+An object of class \code{character} of length 1.
+}
 \usage{
 NCadherin
 }

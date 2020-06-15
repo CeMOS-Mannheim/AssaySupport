@@ -4,7 +4,9 @@
 \name{test_result_df}
 \alias{test_result_df}
 \title{Example of \code{result_df} containing annotations}
-\format{An object of class \code{grouped_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 6 rows and 13 columns.}
+\format{
+An object of class \code{grouped_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 6 rows and 13 columns.
+}
 \usage{
 test_result_df
 }

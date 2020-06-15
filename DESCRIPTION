@@ -8,4 +8,4 @@ License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: tidyverse, MALDIquant, MALDIquantForeign, dplyr, magrittr, svMisc, xml2, AlzTools, ggplot2, ggpubr, tibble, tidyr, openxlsx, OrgMassSpecR, ggrepel
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0

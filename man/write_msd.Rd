@@ -4,9 +4,14 @@
 \alias{write_msd}
 \title{write spectra as MSD to disk}
 \usage{
-write_msd(spectra = spectra_align, Dir,
-  spectraNames = unique(paste0(names(spectra))), namePrefix = "",
-  peaks = NA, annotation_df = NA)
+write_msd(
+  spectra = spectra_align,
+  Dir,
+  spectraNames = unique(paste0(names(spectra))),
+  namePrefix = "",
+  peaks = NA,
+  annotation_df = NA
+)
 }
 \arguments{
 \item{spectra}{List or single \code{MALDIquant::MassSpectrum}, spectra to export.}

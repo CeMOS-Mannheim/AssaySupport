@@ -4,8 +4,15 @@
 \alias{annotate_msd_peak}
 \title{Annotate peaks in MSD files}
 \usage{
-annotate_msd_peak(label, file, peaks, peakIdx = NA, theoMz = 0,
-  charge = 1, peakBaseline = 0)
+annotate_msd_peak(
+  label,
+  file,
+  peaks,
+  peakIdx = NA,
+  theoMz = 0,
+  charge = 1,
+  peakBaseline = 0
+)
 }
 \arguments{
 \item{label}{Character, label of the peak}

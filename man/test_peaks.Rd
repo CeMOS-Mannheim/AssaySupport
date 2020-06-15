@@ -4,7 +4,9 @@
 \name{test_peaks}
 \alias{test_peaks}
 \title{Peaks of (\code{test_spectra_proc}) as \code{MALDIquant::MassPeaks}}
-\format{An object of class \code{list} of length 2.}
+\format{
+An object of class \code{list} of length 2.
+}
 \usage{
 test_peaks
 }

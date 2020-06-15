@@ -4,8 +4,14 @@
 \alias{getMzShift}
 \title{Get normalization factors for a specific species}
 \usage{
-getMzShift(peaksdf, tol, targetSpecies, speciesdf = NA, tolppm = TRUE,
-  allowNoMatch = TRUE)
+getMzShift(
+  peaksdf,
+  tol,
+  targetSpecies,
+  speciesdf = NA,
+  tolppm = TRUE,
+  allowNoMatch = TRUE
+)
 }
 \arguments{
 \item{peaksdf}{Data.frame, see \code{AssaySupport::generate_peakdf}.}

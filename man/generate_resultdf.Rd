@@ -4,10 +4,19 @@
 \alias{generate_resultdf}
 \title{Generate result data.frame containing species found in supplied list}
 \usage{
-generate_resultdf(peak_df, speciesdf, tol, highMz = NA, highMzTol = NA,
-  tolppm = TRUE, nHits = 1, totalInt_varNames = c("Erb", "Neu",
-  "Ab"), separateIdInto = c("Substrate", "Type", "Condition"),
-  subsetcol = separateIdInto[1], sep = "_")
+generate_resultdf(
+  peak_df,
+  speciesdf,
+  tol,
+  highMz = NA,
+  highMzTol = NA,
+  tolppm = TRUE,
+  nHits = 1,
+  totalInt_varNames = c("Erb", "Neu", "Ab"),
+  separateIdInto = c("Substrate", "Type", "Condition"),
+  subsetcol = separateIdInto[1],
+  sep = "_"
+)
 }
 \arguments{
 \item{peak_df}{Data.frame containing peak data as generate by \code{generate_peakdf}}

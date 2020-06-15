@@ -4,7 +4,9 @@
 \name{C99_3xFLAG}
 \alias{C99_3xFLAG}
 \title{Sequence of C99 with added 3xFLAG}
-\format{An object of class \code{character} of length 1.}
+\format{
+An object of class \code{character} of length 1.
+}
 \usage{
 C99_3xFLAG
 }

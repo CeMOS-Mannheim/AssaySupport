@@ -4,8 +4,13 @@
 \alias{getMassOfSequece}
 \title{Get the mass of ions from sequence}
 \usage{
-getMassOfSequece(sequence, charge = 1, mode = "avg", IAA = FALSE,
-  unlist = TRUE)
+getMassOfSequece(
+  sequence,
+  charge = 1,
+  mode = "avg",
+  IAA = FALSE,
+  unlist = TRUE
+)
 }
 \arguments{
 \item{sequence}{character or (named) character vector, amino acid sequence}

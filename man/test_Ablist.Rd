@@ -4,13 +4,15 @@
 \name{test_Ablist}
 \alias{test_Ablist}
 \title{Mass list of GSEC reaction related products from different substrates.}
-\format{A data frame with with 4 variables:
+\format{
+A data frame with with 4 variables:
 \describe{
   \item{Substrate}{Name of substrate}
   \item{Species}{Name of product species, eg. Ab1_38 or AICD49_50}
   \item{mz}{Mass of species}
   \item{comment}{Free text fild.}
-  }}
+  }
+}
 \usage{
 test_Ablist
 }

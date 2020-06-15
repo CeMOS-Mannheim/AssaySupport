@@ -4,14 +4,16 @@
 \name{test_peak_df}
 \alias{test_peak_df}
 \title{Example peak list of \code{test_spectra}}
-\format{A data frame with with 5 variables:
+\format{
+A data frame with with 5 variables:
 \describe{
   \item{ID}{Sample name as defined at istrument when data was recorded.}
   \item{plotIdx}{Index of spectrum.}
   \item{mz}{Mass of peak.}
   \item{int}{Intensity of peak.}
   \item{SNR}{Signal-to-Noise Ratio of peak.}
-  }}
+  }
+}
 \usage{
 test_peak_df
 }

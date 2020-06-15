@@ -4,7 +4,9 @@
 \name{test_spectra_proc}
 \alias{test_spectra_proc}
 \title{Preprocessed spectra (\code{MALDIquant::MassSpectrum}) of GSEC reactions as examples}
-\format{An object of class \code{list} of length 2.}
+\format{
+An object of class \code{list} of length 2.
+}
 \usage{
 test_spectra_proc
 }

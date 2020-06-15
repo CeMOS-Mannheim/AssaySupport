@@ -4,7 +4,9 @@
 \name{C99_full}
 \alias{C99_full}
 \title{Products of GSEC activity on C99 including modified formes}
-\format{An object of class \code{data.frame} with 1087 rows and 3 columns.}
+\format{
+An object of class \code{data.frame} with 1087 rows and 3 columns.
+}
 \usage{
 C99_full
 }

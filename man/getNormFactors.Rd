@@ -4,8 +4,14 @@
 \alias{getNormFactors}
 \title{Get normalization factors for a specific species}
 \usage{
-getNormFactors(peaksdf, targetSpecies, tol, speciesdf = NA,
-  tolppm = TRUE, allowNoMatch = TRUE)
+getNormFactors(
+  peaksdf,
+  targetSpecies,
+  tol,
+  speciesdf = NA,
+  tolppm = TRUE,
+  allowNoMatch = TRUE
+)
 }
 \arguments{
 \item{peaksdf}{Data.frame, see \code{AssaySupport::generate_peakdf}.}

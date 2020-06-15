@@ -4,7 +4,9 @@
 \name{test_spectra}
 \alias{test_spectra}
 \title{Spectra (\code{MALDIquant::MassSpectrum}) of GSEC reactions as examples.}
-\format{An object of class \code{list} of length 18.}
+\format{
+An object of class \code{list} of length 18.
+}
 \usage{
 test_spectra
 }

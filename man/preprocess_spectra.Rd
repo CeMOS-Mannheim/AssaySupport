@@ -4,17 +4,30 @@
 \alias{preprocess_spectra}
 \title{Preprocess spectra}
 \usage{
-preprocess_spectra(spec = spectra, smooth_meth = "SavitzkyGolay",
-  smooth_halfWindowSize = 20, norm_meth = c("TIC", "IS", "none"),
-  lockMass_species = NA, lockMass_tol = 250, lockMass_tolPPM = TRUE,
-  IS_species = lockMass_species, IS_tol = lockMass_tol,
-  IS_tolPPM = lockMass_tolPPM, filter_spectra = "Cal|D1|D2|CAL",
-  baseline_meth = "TopHat", avg_method = c("mean", "median", "sum",
-  NA), align = c("none", "before", "after", "both"),
-  align_Method = "linear", align_SNR = 2, ISlockMass_SNR = 3,
-  align_pickMeth = "SuperSmoother", align_minFreq = 0.25,
-  align_tol = 0.01, species_df = C99T_commonSpecies,
-  allowNoMatch = TRUE)
+preprocess_spectra(
+  spec = spectra,
+  smooth_meth = "SavitzkyGolay",
+  smooth_halfWindowSize = 20,
+  norm_meth = c("TIC", "IS", "none"),
+  lockMass_species = NA,
+  lockMass_tol = 250,
+  lockMass_tolPPM = TRUE,
+  IS_species = lockMass_species,
+  IS_tol = lockMass_tol,
+  IS_tolPPM = lockMass_tolPPM,
+  filter_spectra = "Cal|D1|D2|CAL",
+  baseline_meth = "TopHat",
+  avg_method = c("mean", "median", "sum", NA),
+  align = c("none", "before", "after", "both"),
+  align_Method = "linear",
+  align_SNR = 2,
+  ISlockMass_SNR = 3,
+  align_pickMeth = "SuperSmoother",
+  align_minFreq = 0.25,
+  align_tol = 0.01,
+  species_df = C99T_commonSpecies,
+  allowNoMatch = TRUE
+)
 }
 \arguments{
 \item{spec}{List of \code{MALDIquant::MassSpectrum}}

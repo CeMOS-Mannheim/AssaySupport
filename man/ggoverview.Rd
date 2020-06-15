@@ -4,11 +4,19 @@
 \alias{ggoverview}
 \title{Overview of different conditions with annotations}
 \usage{
-ggoverview(spec_ID, n_overlay, labels_df, specs = spectra_align,
-  ab_max = get_max(labels_df, "Ab"), aicd_max = get_max(labels_df,
-  "AICD"), title = "auto", total_xlim = c(3000, 16000),
-  abeta_xlim = c(4000, 5000), aicd_xlim = c(9400, 10000),
-  substr_xlim = c(14500, 15500))
+ggoverview(
+  spec_ID,
+  n_overlay,
+  labels_df,
+  specs = spectra_align,
+  ab_max = get_max(labels_df, "Ab"),
+  aicd_max = get_max(labels_df, "AICD"),
+  title = "auto",
+  total_xlim = c(3000, 16000),
+  abeta_xlim = c(4000, 5000),
+  aicd_xlim = c(9400, 10000),
+  substr_xlim = c(14500, 15500)
+)
 }
 \arguments{
 \item{spec_ID}{Integer, ID of first spectrum}

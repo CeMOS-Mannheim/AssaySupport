@@ -4,7 +4,9 @@
 \name{C99T_commonSpecies}
 \alias{C99T_commonSpecies}
 \title{Common products of GSEC activity on C99_deltaT}
-\format{An object of class \code{data.frame} with 35 rows and 3 columns.}
+\format{
+An object of class \code{data.frame} with 35 rows and 3 columns.
+}
 \usage{
 C99T_commonSpecies
 }

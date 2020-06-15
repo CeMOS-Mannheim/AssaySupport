@@ -4,8 +4,7 @@
 \alias{cutSequence}
 \title{Generate list of fragments from sequence}
 \usage{
-cutSequence(sequence, start = 1, end = nchar(sequence),
-  prefix = "Frag")
+cutSequence(sequence, start = 1, end = nchar(sequence), prefix = "Frag")
 }
 \arguments{
 \item{sequence}{character, amino acid sequence}

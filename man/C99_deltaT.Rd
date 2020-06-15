@@ -4,7 +4,9 @@
 \name{C99_deltaT}
 \alias{C99_deltaT}
 \title{Sequence of C99 with added 3xFLAG and shorter linker region}
-\format{An object of class \code{character} of length 1.}
+\format{
+An object of class \code{character} of length 1.
+}
 \usage{
 C99_deltaT
 }

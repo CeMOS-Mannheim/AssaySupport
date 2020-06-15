@@ -4,8 +4,14 @@
 \alias{generate_peakdf}
 \title{generate peak statistic data.frame}
 \usage{
-generate_peakdf(spectra, pick_meth = "SuperSmoother",
-  halfWindowSize = 10, SNR = 3, binpeaks = FALSE, binTol = 5e-05)
+generate_peakdf(
+  spectra,
+  pick_meth = "SuperSmoother",
+  halfWindowSize = 10,
+  SNR = 3,
+  binpeaks = FALSE,
+  binTol = 5e-05
+)
 }
 \arguments{
 \item{spectra}{\code{MALDIquant::MassSpectrum}}

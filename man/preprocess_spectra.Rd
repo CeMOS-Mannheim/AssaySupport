@@ -15,7 +15,7 @@ preprocess_spectra(
   IS_species = lockMass_species,
   IS_tol = lockMass_tol,
   IS_tolPPM = lockMass_tolPPM,
-  filter_spectra = "Cal|D1|D2|CAL",
+  filter_spectra = NA,
   baseline_meth = "TopHat",
   avg_method = c("mean", "median", "sum", NA),
   align = c("none", "before", "after", "both"),

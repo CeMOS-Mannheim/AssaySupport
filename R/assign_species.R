@@ -47,18 +47,18 @@ assign_species <- function(peak_df,
   for(sub in subsets) { 
     if(!is.na(subsetcol)) { 
       fmzlist <- speciesdf[speciesdf[,subsetcol] == sub,]
-      fpeak_df <- data.frame(peak_df[peak_df[,subsetcol] == sub,], # prepare peakdf with empty cols for species assigment 
-                             species = NA,
-                             mz.theo = NA,
-                             mz.diff = NA,
-                             mz.diff.ppm = NA) %>% dplyr::as_tibble()
+      fpeak_df <- tibble::tibble(peak_df[peak_df[,subsetcol] == sub,], # prepare peakdf with empty cols for species assigment 
+                                 species =  NA_character_,
+                                 mz.theo = NA_real_,
+                                 mz.diff = NA_real_,
+                                 mz.diff.ppm = NA_real_) 
     } else { # no subsetting
       fmzlist <- speciesdf
-      fpeak_df <- data.frame(peak_df,
-                             species = NA,
-                             mz.theo = NA,
-                             mz.diff = NA,
-                             mz.diff.ppm = NA) %>% dplyr::as_tibble()
+      fpeak_df <- tibble::tibble(peak_df,
+                                 species = NA_character_,
+                                 mz.theo = NA_real_,
+                                 mz.diff = NA_real_,
+                                 mz.diff.ppm = NA_real_) 
     }
     
     for(i in 1:dim(fpeak_df[, mzcol])[1]) {  

@@ -5,7 +5,7 @@
 \title{generate peak statistic data.frame}
 \usage{
 generate_peakdf(
-  spectra,
+  data,
   pick_meth = "SuperSmoother",
   halfWindowSize = 10,
   SNR = 3,
@@ -14,15 +14,15 @@ generate_peakdf(
 )
 }
 \arguments{
-\item{spectra}{\code{MALDIquant::MassSpectrum}}
+\item{data}{\code{MALDIquant::MassSpectrum} or \code{MALDIquant::MassPeaks}}
 
-\item{pick_meth}{Character, peak picking method}
+\item{pick_meth}{Character, peak picking method. Only applies is no peaks are supplied.}
 
-\item{halfWindowSize}{Integer, halfWindowSize}
+\item{halfWindowSize}{Integer, halfWindowSize. Only applies is no peaks are supplied.}
 
-\item{SNR}{numeric, SNR value}
+\item{SNR}{numeric, SNR value. Only applies is no peaks are supplied.}
 
-\item{binpeaks}{Logical, perform binning}
+\item{binpeaks}{Logical, perform binning.}
 }
 \value{
 data.frame containing peak statistics

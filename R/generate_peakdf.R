@@ -1,10 +1,10 @@
 #' generate peak statistic data.frame
 #'
-#' @param spectra        \code{MALDIquant::MassSpectrum}
-#' @param pick_meth      Character, peak picking method
-#' @param SNR            numeric, SNR value
-#' @param halfWindowSize Integer, halfWindowSize
-#' @param binpeaks       Logical, perform binning
+#' @param data           \code{MALDIquant::MassSpectrum} or \code{MALDIquant::MassPeaks}
+#' @param pick_meth      Character, peak picking method. Only applies is no peaks are supplied.
+#' @param SNR            numeric, SNR value. Only applies is no peaks are supplied.
+#' @param halfWindowSize Integer, halfWindowSize. Only applies is no peaks are supplied.
+#' @param binpeaks       Logical, perform binning.
 #'
 #' @return data.frame containing peak statistics
 #' @export
@@ -12,27 +12,32 @@
 #' @examples 
 #' head(generate_peakdf(test_spectra_proc))
 
-generate_peakdf <- function(spectra, 
+generate_peakdf <- function(data, 
                             pick_meth = "SuperSmoother",
                             halfWindowSize = 10, 
                             SNR = 3, 
                             binpeaks = FALSE,
                             binTol = 50e-6) {
-  peaks <- MALDIquant::detectPeaks(spectra, method = pick_meth, SNR = SNR, halfWindowSize = halfWindowSize)
-  if(MALDIquant::isMassSpectrum(spectra)) {
-    spectra <- list(spectra)
+  if(MALDIquant::isMassPeaksList(data) || MALDIquant::isMassPeaks(data)) {
+    peaks <- data
+  } else {
+    peaks <- MALDIquant::detectPeaks(data, method = pick_meth, SNR = SNR, halfWindowSize = halfWindowSize)
+  }
+  
+  if(MALDIquant::isMassSpectrum(data) || MALDIquant::isMassPeaks(data)) {
+    data <- list(data)
     peaks <- list(peaks)
   }
   
-  if(is.null(names(spectra))) {
-    names(spectra) <- "noName"
+  if(is.null(names(data))) {
+    names(data) <- "noName"
   }
   
   if(binpeaks) {
     peaks <- MALDIquant::binPeaks(peaks, tolerance = binTol)
   }
   
-  names(peaks) <- names(spectra)
+  names(peaks) <- names(data)
   
   peak_df <- data.frame(ID = character(),
                         plotIdx <- integer(),

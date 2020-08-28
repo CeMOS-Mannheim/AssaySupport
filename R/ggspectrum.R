@@ -3,18 +3,18 @@
     stop("Length of name has to be one.\n")
   }
   if(isMassPeaks(spec)) {
-    df <- tibble(ID = ID, 
-                 plotIdx = plotIdx,
-                 mz = mass(spec), 
-                 int = intensity(spec), 
-                 SNR = snr(spec),
-                 type = "peak")
-  } else if (isMassSpectrum(spec) | isMassSpectrumOnDisk(spec)) {
-    df <- tibble(ID = ID, 
-                 plotIdx = plotIdx,
-                 mz = mass(spec), 
-                 int = intensity(spec),
-                 type = "spectrum")
+    df <- tibble::tibble(ID = ID, 
+                         plotIdx = plotIdx,
+                         mz = mass(spec), 
+                         int = intensity(spec), 
+                         SNR = snr(spec),
+                         type = "peak")
+  } else if (isMassSpectrum(spec) || isMassSpectrumOnDisk(spec)) {
+    df <- tibble::tibble(ID = ID, 
+                         plotIdx = plotIdx,
+                         mz = mass(spec), 
+                         int = intensity(spec),
+                         type = "spectrum")
   } else if(is.list(spec)) {
     stop("spec was a list. Has to be a single (MALDIquant) object.\n")
   } else {
@@ -45,11 +45,11 @@ spec2df <- function(spec, peaks, nameFromMetaData = FALSE) {
   noNames <- FALSE
   if(nameFromMetaData) {
     if(is.list(spec)) {
-    names <- vapply(spec, function(x) {
-      md <- metaData(x)
-      nm <- md[[grep("name", names(md))]]
-      return(nm)
-    }, "a")
+      names <- vapply(spec, function(x) {
+        md <- metaData(x)
+        nm <- md[[grep("name", names(md))]]
+        return(nm)
+      }, "a")
     } else {
       md <- metaData(spec)
       names <- md[[grep("name", names(md))]]
@@ -79,13 +79,13 @@ spec2df <- function(spec, peaks, nameFromMetaData = FALSE) {
   } else {
     df_spec <- AssaySupport:::.convertSpec(spec, names[1], 1)
   }
-
+  
   if(!missing(peaks)) {
     if(is.list(peaks)) {
-    df_peaks <- lapply(1:length(spec), function(i) {
-      return(AssaySupport:::.convertSpec(peaks[[i]], names[[i]], i))
-    })
-    
+      df_peaks <- lapply(1:length(spec), function(i) {
+        return(AssaySupport:::.convertSpec(peaks[[i]], names[[i]], i))
+      })
+      
     } else {
       df_peaks <- AssaySupport:::.convertSpec(peaks, names[1], 1)
     }

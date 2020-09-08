@@ -95,7 +95,7 @@ preprocess_spectra <- function(data,
                                                   method = norm_meth)
          },
          IS = {
-           peak_df <- generate_peakdf(spectra = data, 
+           peak_df <- generate_peakdf(data, 
                                       SNR = ISlockMass_SNR)
            norm_fac <- getNormFactors(peaksdf = peak_df,
                                       speciesdf = species_df, 
@@ -131,7 +131,7 @@ preprocess_spectra <- function(data,
   }
   
   if(!is.na(lockMass_species)) {
-    peak_df <- generate_peakdf(spectra = data, 
+    peak_df <- generate_peakdf(data, 
                                SNR = ISlockMass_SNR)
     mzshift <- getMzShift(peak_df, 
                           speciesdf = species_df, 

@@ -5,7 +5,7 @@
 \title{Preprocess spectra}
 \usage{
 preprocess_spectra(
-  spec = spectra,
+  data,
   smooth_meth = "SavitzkyGolay",
   smooth_halfWindowSize = 20,
   norm_meth = c("TIC", "IS", "none"),
@@ -30,7 +30,7 @@ preprocess_spectra(
 )
 }
 \arguments{
-\item{spec}{List of \code{MALDIquant::MassSpectrum}}
+\item{data}{List of \code{MALDIquant::MassSpectrum}}
 
 \item{smooth_meth}{Character, smoothing method see \code{MALDIquant::smoothIntensity()}}
 
@@ -84,7 +84,7 @@ List of preprocessed \code{MALDIquant::MassSpectrum}
 Preprocess spectra
 }
 \examples{
-test_spectra_proc <- AssaySupport::preprocess_spectra(spec = test_spectra,
+test_spectra_proc <- AssaySupport::preprocess_spectra(data = test_spectra,
                                                       smooth_meth = "SavitzkyGolay",
                                                       smooth_halfWindowSize  = 5,
                                                       norm_meth = "TIC",

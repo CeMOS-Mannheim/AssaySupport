@@ -1,6 +1,6 @@
 #' Preprocess spectra
 #'
-#' @param spec                  List of \code{MALDIquant::MassSpectrum}
+#' @param data                  List of \code{MALDIquant::MassSpectrum}
 #' @param smooth_meth           Character, smoothing method see \code{MALDIquant::smoothIntensity()}
 #' @param smooth_halfWindowSize Numeric, halfWindowSize for smoothing method see \code{MALDIquant::smoothIntensity()}
 #' @param norm_meth             Character, normalization method see \code{MALDIquant::calibrateIntensity()}.
@@ -29,7 +29,7 @@
 #' @return List of preprocessed \code{MALDIquant::MassSpectrum}
 #' @export
 #' @examples 
-#' test_spectra_proc <- AssaySupport::preprocess_spectra(spec = test_spectra,
+#' test_spectra_proc <- AssaySupport::preprocess_spectra(data = test_spectra,
 #'                                                       smooth_meth = "SavitzkyGolay",
 #'                                                       smooth_halfWindowSize  = 5,
 #'                                                       norm_meth = "TIC",
@@ -37,7 +37,7 @@
 #'                                                       baseline_meth = "TopHat",
 #'                                                       align = "none")
 #' 
-preprocess_spectra <- function(spec = spectra, 
+preprocess_spectra <- function(data, 
                                smooth_meth = "SavitzkyGolay",
                                smooth_halfWindowSize  = 20,
                                norm_meth = c("TIC", "IS", "none"),
@@ -73,29 +73,29 @@ preprocess_spectra <- function(spec = spectra,
   }
   
   
-  spec_names <- names(spec)
+  spec_names <- names(data)
   
   cat("\n", AlzTools::timeNowHM(), "Preprocessing spectra...\n")
   
-  spec <- MALDIquant::smoothIntensity(spec, method = smooth_meth, halfWindowSize  = smooth_halfWindowSize)
-  spec <- MALDIquant::removeBaseline(spec, method = baseline_meth)
-  names(spec) <- spec_names
+  data <- MALDIquant::smoothIntensity(data, method = smooth_meth, halfWindowSize  = smooth_halfWindowSize)
+  data <- MALDIquant::removeBaseline(data, method = baseline_meth)
+  names(data) <- spec_names
   
   switch(norm_meth,
          TIC = {
-           spec <- MALDIquant::calibrateIntensity(spec, 
+           data <- MALDIquant::calibrateIntensity(data, 
                                                   method = norm_meth)
          }, 
          median = {
-           spec <- MALDIquant::calibrateIntensity(spec, 
+           data <- MALDIquant::calibrateIntensity(data, 
                                                   method = norm_meth)
          },
          PQM = {
-           spec <- MALDIquant::calibrateIntensity(spec, 
+           data <- MALDIquant::calibrateIntensity(data, 
                                                   method = norm_meth)
          },
          IS = {
-           peak_df <- generate_peakdf(spectra = spec, 
+           peak_df <- generate_peakdf(spectra = data, 
                                       SNR = ISlockMass_SNR)
            norm_fac <- getNormFactors(peaksdf = peak_df,
                                       speciesdf = species_df, 
@@ -104,18 +104,18 @@ preprocess_spectra <- function(spec = spectra,
                                       tolppm = IS_tolPPM, 
                                       allowNoMatch = allowNoMatch)
            
-           spec <- normalizeByFactor(spec[norm_fac$specIdx], norm_fac$norm_factor)
+           data <- normalizeByFactor(data[norm_fac$specIdx], norm_fac$norm_factor)
            spec_names <- spec_names[norm_fac$specIdx]
          }, 
          none = {
            # don't do anything
          })
-  names(spec) <- spec_names
+  names(data) <- spec_names
   
   if(any(c("before", "both") %in% align)) {
     aligned_specs <- list()
     for(name in unique(spec_names)) { 
-      current_specset <- spec[which(names(spec) == name)]
+      current_specset <- data[which(names(data) == name)]
       
       current_ref <- MALDIquant::referencePeaks(
                                 MALDIquant::detectPeaks(current_specset, 
@@ -127,11 +127,11 @@ preprocess_spectra <- function(spec = spectra,
                                                           reference = current_ref)
       aligned_specs <- append(aligned_specs, current_specset_aligned)
     } 
-    spec <- aligned_specs
+    data <- aligned_specs
   }
   
   if(!is.na(lockMass_species)) {
-    peak_df <- generate_peakdf(spectra = spec, 
+    peak_df <- generate_peakdf(spectra = data, 
                                SNR = ISlockMass_SNR)
     mzshift <- getMzShift(peak_df, 
                           speciesdf = species_df, 
@@ -139,34 +139,34 @@ preprocess_spectra <- function(spec = spectra,
                           tol = lockMass_tol, 
                           tolppm = lockMass_tolPPM,
                           allowNoMatch = allowNoMatch)
-    spec <- shiftMassAxis(spec[mzshift$specIdx], mzshift$mzshift)
+    data <- shiftMassAxis(data[mzshift$specIdx], mzshift$mzshift)
     spec_names <- spec_names[mzshift$specIdx]
   }
   
-  names(spec) <- spec_names
+  names(data) <- spec_names
   
   if(!is.na(filter_spectra)){
-    spec <- spec[!grepl(filter_spectra, names(spec))]
+    data <- data[!grepl(filter_spectra, names(data))]
   }
   if(!is.na(avg_method)) {
-    spec <- MALDIquant::averageMassSpectra(spec, labels = spec_names, method = avg_method)
+    data <- MALDIquant::averageMassSpectra(data, labels = spec_names, method = avg_method)
     spec_names <- unique(spec_names)
-    names(spec) <- spec_names
+    names(data) <- spec_names
   }
-  spec <- MALDIquant::removeBaseline(spec, method = baseline_meth)
-  names(spec) <- spec_names
+  data <- MALDIquant::removeBaseline(data, method = baseline_meth)
+  names(data) <- spec_names
   
   if(any(c("after", "both") %in% align)) {
-    spec <- MALDIquant::alignSpectra(spec,
+    data <- MALDIquant::alignSpectra(data,
                                      warpingMethod = align_Method, 
                                      reference = MALDIquant::referencePeaks(
-                                       MALDIquant::detectPeaks(spec, 
+                                       MALDIquant::detectPeaks(data, 
                                                                SNR = align_SNR, 
                                                                method = align_pickMeth),
                                        minFrequency = align_minFreq, 
                                        tolerance = align_tol))
-    names(spec) <- spec_names
+    names(data) <- spec_names
   }
   
-  return(spec)
+  return(data)
 }

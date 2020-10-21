@@ -64,7 +64,7 @@ assign_species <- function(peak_df,
     for(i in 1:dim(fpeak_df[, mzcol])[1]) {  
       tol <- original_tol # restore orginal tol at the start of each iteration
       mz <- fpeak_df[[i, mzcol]]
-      closest_idx <-  AlzTools::getClosest(dplyr::pull(fmzlist, mzcol), mz)
+      closest_idx <-  getClosest(dplyr::pull(fmzlist, mzcol), mz)
       closest_mz <- dplyr::pull(fmzlist, mzcol)[closest_idx]
       
       if(!is.na(highMz)) {

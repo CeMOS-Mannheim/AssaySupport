@@ -16,7 +16,7 @@ getPlateCalibarion <- function(peaks, cal_name = "CAL|Cal", ref, top_n = NA, tol
   nm <- names(peaks)
   if(!is.na(cal_name)) {
     nm_idx <- grepl(x = nm, pattern = cal_name)
-    cat("Found", length(nm_idx), "matches for cal_name:", cal_name, "\n")
+    cat("Found", sum(nm_idx), "matches for cal_name:", cal_name, "\n")
     peaks <- peaks[nm_idx]
   }
   if(!is.na(top_n)) {
@@ -37,6 +37,7 @@ getPlateCalibarion <- function(peaks, cal_name = "CAL|Cal", ref, top_n = NA, tol
   cal <- determineWarpingFunctions(l = peaks, 
                                    reference = ref, 
                                    tolerance = tol, 
-                                   method = method)
+                                   method = method, 
+                                   allowNoMatches = TRUE)
   return(cal)
 }

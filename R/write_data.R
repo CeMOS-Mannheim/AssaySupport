@@ -36,7 +36,7 @@ write_msd <- function(spectra = spectra_align,
   if(is.data.frame(annotation_df) && is.na(peaks[1])) {
     stop("Annotation only possible if peaks are supplied.")
   }
-  cat("\n", AlzTools::timeNowHM(), "Writing avg spectra to disk...\n")
+  cat("\n", timeNowHM(), "Writing avg spectra to disk...\n")
   # export spectra
   counter <- 0
   for(i in 1:length(spectra)) {

@@ -1,11 +1,11 @@
 Package: AssaySupport
 Title: Functions for MS analysis of GSEC reactions of Lucia Chavez-Guiterrez lab
-Version: 0.4.23
+Version: 0.4.24
 Authors@R: person("Thomas", "Enzlein", email = "t.enzlein@hs-mannheim.de", role = c("aut", "cre"))
 Description: Useful functions for data evaluation of MALDI MS measurements of GSEC reactions.
 Depends: R (>= 3.4.0)
 License: file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports: tidyverse, MALDIquant, MALDIquantForeign, dplyr, magrittr, svMisc, xml2, AlzTools, ggplot2, ggpubr, tibble, tidyr, openxlsx, OrgMassSpecR, ggrepel
+Imports: tidyverse, MALDIquant, MALDIquantForeign, dplyr, magrittr, svMisc, xml2, ggplot2, ggpubr, tibble, tidyr, openxlsx, OrgMassSpecR, ggrepel
 RoxygenNote: 7.1.1

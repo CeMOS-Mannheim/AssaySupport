@@ -18,55 +18,11 @@
 #' @return
 #' data.frame only containing peak information which could be annotated by species given in \code{speciesdf}
 #' @export
+#' 
+#' @importFrom tibble tibble
 #'
 #' @examples 
 #' head(generate_resultdf(test_peak_df, test_Ablist, tol = 5))
-
-# generate_resultdf <- function(peak_df, 
-#                               speciesdf, 
-#                               tol,
-#                               highMz = NA,
-#                               highMzTol = NA,
-#                               tolppm = TRUE,
-#                               nHits = 1,
-#                               totalInt_varNames = c("Erb", "Neu", "Ab"), 
-#                               separateIdInto = c("Substrate", "Type", "Condition"),
-#                               subsetcol =  separateIdInto[1],
-#                               sep = "_") {
-#   cat("\n", AlzTools::timeNowHM(), "Generating result data.frame...\n")
-#   res_df <- tibble()
-#   
-#   for(i in 1:nHits) {
-#     label_df <- peak_df %>%
-#       tidyr::separate(ID, 
-#                       into = separateIdInto, 
-#                       sep = sep) %>%
-#       AssaySupport::assign_species(peak_df = ., 
-#                                    subsetcol = subsetcol,
-#                                    speciesdf = speciesdf, 
-#                                    tol = tol, 
-#                                    highMz = highMz,
-#                                    highMzTol = highMzTol,
-#                                    tolppm = tolppm,
-#                                    mzcol = "mz")
-#     if(nHits > 1) {
-#       res_df <- bind_rows(res_df, label_df)
-#       speciesdf <- speciesdf %>%
-#         filter(!Species %in% res_df$species)
-#     }
-#   }
-#   if(nHits > 1) {
-#     return(res_df)
-#   }
-#   
-#   res_df <- label_df %>%
-#     dplyr::filter(!is.na(species)) %>%
-#     dplyr::group_by(plotIdx) %>%
-#     dplyr::mutate(total.Ab = sum(int[grepl(paste(totalInt_varNames, collapse = "|"), species)]),
-#                   norm.tot = int/total.Ab*100)
-#   
-#   return(res_df)
-# }
 
 generate_resultdf <- function(peak_df, 
                               speciesdf, 
@@ -79,13 +35,32 @@ generate_resultdf <- function(peak_df,
                               separateIdInto = c("Substrate", "Type", "Condition"),
                               subsetcol =  separateIdInto[1],
                               sep = "_") {
-  cat("\n", AlzTools::timeNowHM(), "Generating result data.frame...\n")
+  if(missing(tol)) {
+    stop("No tolerance provided. Please set 'tol'.\n")
+  }
+  if(missing(peak_df)) {
+    stop("No peak_df provided.\n")
+  }
+  if(missing(speciesdf)) {
+    stop("No speciesdf provided.\n")
+  }
+  if(!subsetcol %in% colnames(speciesdf)) {
+    stop("subsetcol not found in colnames of speciesdf.\n")
+  }
+  
+  cat("\n", timeNowHM(), "Generating result data.frame...\n")
+  
+  
   
   res_df <- tibble()
   peak_df <- peak_df %>%
     tidyr::separate(ID, 
                     into = separateIdInto, 
                     sep = sep)
+  
+  if(!any(speciesdf[,subsetcol] %in% peak_df[,subsetcol])) {
+    stop("No matching entries for subsetcol in peak_df and speciesdf.\n")
+  }
   
   Idx <- peak_df %>%
     pull(plotIdx) %>%

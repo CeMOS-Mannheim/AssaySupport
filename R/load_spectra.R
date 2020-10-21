@@ -30,7 +30,7 @@ load_spectra <- function(Dir, filter = c("Cal", "cal", "CAL"), nameSpectra = TRU
   
   spectra <- vector("list", length = total_n)
   counter <- 0
-  cat(AlzTools::timeNowHM(), "Loading spectra...\n\n")
+  cat(timeNowHM(), "Loading spectra...\n\n")
   for(i in analyses) {
     
     path <- file.path(Dir, i)

@@ -202,7 +202,7 @@ ggoverlay_spectra <- function(spec_ID,
   
   p <- ggplot2::ggplot(spec_df, aes(x = mz, y = int, col = Condition)) + 
     ggplot2::geom_line(alpha = 0.8) +
-    AlzTools::xtheme() 
+    xtheme() 
   
   suppressWarnings(
     if(!is.na(labels_df)) {

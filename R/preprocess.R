@@ -6,13 +6,11 @@
 #' @param norm_meth             Character, normalization method see \code{MALDIquant::calibrateIntensity()}.
 #'                              Additional to the options that MALDIquant provides for normalization it is also possible to normalize to a internal standard ("IS").
 #'                              To use this option \code{IS_species} and \code{IS_tol} has to be set and a \code{species_df} has to be provided (see \code{AssaySupport::generate_assigndf()}).
-#' @param lockMass_species      Character, name of the species to use as lock mass. See \code{generate_resultdf}. 
+#' @param lockMass              Numeric, mass for lock mass recalibration. See \code{generate_resultdf}. 
 #'                              Set to \code{NA} if no mass recalibartion should be performed.
 #' @param lockMass_tol          Numeric, tolerance for lock mass species assignment.
-#' @param lockMass_tolPPM       Logical, use the \code{lockMass_tol} as ppm.
 #' @param IS_species            Character, name of the species to use as internal standard for normalization. See \code{generate_resultdf}.
 #' @param IS_tol                Numeric, tolerance for internal standard species assignment.
-#' @param IS_tolPPM             Logical, use the \code{IS_tol} as ppm.
 #' @param filter_spectra        Character vector, regex of patterns to exclude spectra (like calibration spectra in same folder)
 #' @param baseline_meth         Character, baseline removal method see \code{MALDIquant::removeBaseline}
 #' @param avg_method            Character, aggregation method used to generate average spectra. See \code{MALDIquant::averageMassSpectra}.
@@ -20,6 +18,7 @@
 #' @param align_Method          Character, Alignment method (see \code{MALDIquant::alignSpectra}).
 #' @param align_SNR             Numeric, SNR for peak picking (see \code{MALDIquant::alignSpectra}).
 #' @param ISlockMass_SNR        Numeric, SNR for detection of the IS/lock mass.
+#' @param tolppm                Logical, all tolerances in ppm instead of Dalton.
 #' @param align_pickMeth        Character, Peak picking method (see \code{MALDIquant::alignSpectra}).
 #' @param align_minFreq         Character, minimal peak frequency (see \code{MALDIquant::alignSpectra}).
 #' @param align_tol             Character, tolerance to consider peak as identical (see \code{MALDIquant::alignSpectra}).
@@ -41,12 +40,10 @@ preprocess_spectra <- function(data,
                                smooth_meth = "SavitzkyGolay",
                                smooth_halfWindowSize  = 20,
                                norm_meth = c("TIC", "IS", "none"),
-                               lockMass_species = NA,
+                               lockMass = NA,
                                lockMass_tol = 250,
-                               lockMass_tolPPM = TRUE,
-                               IS_species = lockMass_species,
+                               IS_species = lockMass,
                                IS_tol = lockMass_tol,
-                               IS_tolPPM = lockMass_tolPPM,
                                filter_spectra = NA,
                                baseline_meth = "TopHat",
                                avg_method = c("mean", "median", "sum", NA),
@@ -54,10 +51,10 @@ preprocess_spectra <- function(data,
                                align_Method = "linear",
                                align_SNR = 2,
                                ISlockMass_SNR = 3, 
+                               tolppm = TRUE,
                                align_pickMeth = "SuperSmoother",
                                align_minFreq = 0.25,
                                align_tol = 0.01,
-                               species_df = C99T_commonSpecies,
                                allowNoMatch = TRUE) {
   norm_meth <- match.arg(norm_meth)
   avg_method = match.arg(avg_method)
@@ -75,7 +72,7 @@ preprocess_spectra <- function(data,
   
   spec_names <- names(data)
   
-  cat("\n", AlzTools::timeNowHM(), "Preprocessing spectra...\n")
+  cat("\n", timeNowHM(), "Preprocessing spectra...\n")
   
   data <- MALDIquant::smoothIntensity(data, method = smooth_meth, halfWindowSize  = smooth_halfWindowSize)
   data <- MALDIquant::removeBaseline(data, method = baseline_meth)
@@ -98,10 +95,10 @@ preprocess_spectra <- function(data,
            peak_df <- generate_peakdf(data, 
                                       SNR = ISlockMass_SNR)
            norm_fac <- getNormFactors(peaksdf = peak_df,
-                                      speciesdf = species_df, 
+                                      speciesdf = NA, 
                                       targetSpecies = IS_species, 
                                       tol = IS_tol, 
-                                      tolppm = IS_tolPPM, 
+                                      tolppm = tolppm, 
                                       allowNoMatch = allowNoMatch)
            
            data <- normalizeByFactor(data[norm_fac$specIdx], norm_fac$norm_factor)
@@ -130,14 +127,14 @@ preprocess_spectra <- function(data,
     data <- aligned_specs
   }
   
-  if(!is.na(lockMass_species)) {
+  if(!is.na(lockMass)) {
     peak_df <- generate_peakdf(data, 
                                SNR = ISlockMass_SNR)
     mzshift <- getMzShift(peak_df, 
                           speciesdf = species_df, 
-                          targetSpecies = lockMass_species, 
+                          targetSpecies = NA, 
                           tol = lockMass_tol, 
-                          tolppm = lockMass_tolPPM,
+                          tolppm = tolppm,
                           allowNoMatch = allowNoMatch)
     data <- shiftMassAxis(data[mzshift$specIdx], mzshift$mzshift)
     spec_names <- spec_names[mzshift$specIdx]

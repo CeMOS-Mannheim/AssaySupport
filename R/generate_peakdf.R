@@ -40,7 +40,8 @@ generate_peakdf <- function(data,
   names(peaks) <- names(data)
   
   peak_df <- data.frame(ID = character(),
-                        plotIdx <- integer(),
+                        plotIdx = integer(),
+                        peakIdx = character(),
                         mz = double(),
                         int = double(),
                         SNR = double())
@@ -48,6 +49,7 @@ generate_peakdf <- function(data,
   for(i in 1:length(peaks)) {
     df <- data.frame(ID = paste0(names(peaks[i])),
                      plotIdx = i,
+                     peakIdx = paste0(i, "_", 1:length(MALDIquant::mass(peaks[[i]]))),
                      mz = MALDIquant::mass(peaks[[i]]),
                      int = MALDIquant::intensity(peaks[[i]]),
                      SNR = MALDIquant::snr(peaks[[i]]))

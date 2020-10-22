@@ -1,4 +1,4 @@
-#' get clostest matches
+#' get closest matches
 #'
 #' @param x       Numeric vector
 #' @param y       Numeric vector to match x to.
@@ -7,7 +7,7 @@
 #' @param unique  Logical, only retrun unique matches (if n>1).
 #'
 #' @export
-getClostest <- function (x, y, n = NA, tol = NA, unique = FALSE) 
+getClosest <- function (x, y, n = NA, tol = NA, unique = FALSE) 
 {
   diff1 <- diff2 <- abs(x - y)
   if (is.na(n) && is.na(tol) && !unique) {

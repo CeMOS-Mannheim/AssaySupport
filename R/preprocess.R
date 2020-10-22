@@ -131,8 +131,8 @@ preprocess_spectra <- function(data,
     peak_df <- generate_peakdf(data, 
                                SNR = ISlockMass_SNR)
     mzshift <- getMzShift(peak_df, 
-                          speciesdf = species_df, 
-                          targetSpecies = NA, 
+                          speciesdf = NA, 
+                          targetSpecies = lockMass, 
                           tol = lockMass_tol, 
                           tolppm = tolppm,
                           allowNoMatch = allowNoMatch)

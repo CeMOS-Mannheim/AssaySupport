@@ -11,7 +11,7 @@ preprocess_spectra(
   norm_meth = c("TIC", "IS", "none"),
   lockMass = NA,
   lockMass_tol = 250,
-  IS_species = lockMass,
+  IS_mass = lockMass,
   IS_tol = lockMass_tol,
   filter_spectra = NA,
   baseline_meth = "TopHat",
@@ -36,14 +36,14 @@ preprocess_spectra(
 
 \item{norm_meth}{Character, normalization method see \code{MALDIquant::calibrateIntensity()}.
 Additional to the options that MALDIquant provides for normalization it is also possible to normalize to a internal standard ("IS").
-To use this option \code{IS_species} and \code{IS_tol} has to be set and a \code{species_df} has to be provided (see \code{AssaySupport::generate_assigndf()}).}
+To use this option \code{IS_mass} and \code{IS_tol} has to be set .}
 
 \item{lockMass}{Numeric, mass for lock mass recalibration. See \code{generate_resultdf}. 
 Set to \code{NA} if no mass recalibartion should be performed.}
 
 \item{lockMass_tol}{Numeric, tolerance for lock mass species assignment.}
 
-\item{IS_species}{Character, name of the species to use as internal standard for normalization. See \code{generate_resultdf}.}
+\item{IS_mass}{Character, name of the species to use as internal standard for normalization. See \code{generate_resultdf}.}
 
 \item{IS_tol}{Numeric, tolerance for internal standard species assignment.}
 
@@ -70,8 +70,6 @@ Set to \code{NA} if no mass recalibartion should be performed.}
 \item{align_tol}{Character, tolerance to consider peak as identical (see \code{MALDIquant::alignSpectra}).}
 
 \item{allowNoMatch}{Logical, spectra with no match for IS normalization or lock mass calibration will be excluded. If \code{FALSE} method will stop if no match can be found.}
-
-\item{species_df}{Data.frame, see \code{generate_assigndf}.}
 }
 \value{
 List of preprocessed \code{MALDIquant::MassSpectrum}

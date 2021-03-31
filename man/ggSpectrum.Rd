@@ -6,6 +6,7 @@
 \usage{
 ggSpectrum(
   df,
+  aes = aes(x = mz, y = int, col = ID, group = plotIdx),
   minSNR = 1,
   scale = 100,
   round = 1,

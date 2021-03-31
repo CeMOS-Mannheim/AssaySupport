@@ -5,11 +5,11 @@
 #' @param smooth_halfWindowSize Numeric, halfWindowSize for smoothing method see \code{MALDIquant::smoothIntensity()}
 #' @param norm_meth             Character, normalization method see \code{MALDIquant::calibrateIntensity()}.
 #'                              Additional to the options that MALDIquant provides for normalization it is also possible to normalize to a internal standard ("IS").
-#'                              To use this option \code{IS_species} and \code{IS_tol} has to be set and a \code{species_df} has to be provided (see \code{AssaySupport::generate_assigndf()}).
+#'                              To use this option \code{IS_mass} and \code{IS_tol} has to be set .
 #' @param lockMass              Numeric, mass for lock mass recalibration. See \code{generate_resultdf}. 
 #'                              Set to \code{NA} if no mass recalibartion should be performed.
 #' @param lockMass_tol          Numeric, tolerance for lock mass species assignment.
-#' @param IS_species            Character, name of the species to use as internal standard for normalization. See \code{generate_resultdf}.
+#' @param IS_mass            Character, name of the species to use as internal standard for normalization. See \code{generate_resultdf}.
 #' @param IS_tol                Numeric, tolerance for internal standard species assignment.
 #' @param filter_spectra        Character vector, regex of patterns to exclude spectra (like calibration spectra in same folder)
 #' @param baseline_meth         Character, baseline removal method see \code{MALDIquant::removeBaseline}
@@ -22,7 +22,6 @@
 #' @param align_pickMeth        Character, Peak picking method (see \code{MALDIquant::alignSpectra}).
 #' @param align_minFreq         Character, minimal peak frequency (see \code{MALDIquant::alignSpectra}).
 #' @param align_tol             Character, tolerance to consider peak as identical (see \code{MALDIquant::alignSpectra}).
-#' @param species_df            Data.frame, see \code{generate_assigndf}.
 #' @param allowNoMatch          Logical, spectra with no match for IS normalization or lock mass calibration will be excluded. If \code{FALSE} method will stop if no match can be found.
 #'
 #' @return List of preprocessed \code{MALDIquant::MassSpectrum}
@@ -42,7 +41,7 @@ preprocess_spectra <- function(data,
                                norm_meth = c("TIC", "IS", "none"),
                                lockMass = NA,
                                lockMass_tol = 250,
-                               IS_species = lockMass,
+                               IS_mass = lockMass,
                                IS_tol = lockMass_tol,
                                filter_spectra = NA,
                                baseline_meth = "TopHat",
@@ -61,11 +60,8 @@ preprocess_spectra <- function(data,
   align <- match.arg(align)
   
   if(norm_meth == "IS") {
-    if(is.na(IS_species) | dim(species_df)[2] < 1) {
-      stop("IS_species and species_df must be provided for IS normalization.\n")
-    }
-    if(is.character(IS_species) & !(IS_species %in% species_df$Species)) {
-      stop("IS_species not containied in species_df.\n")
+    if(is.na(IS_mass)) {
+      stop("IS_mass must be provided for IS normalization.\n")
     }
   }
   
@@ -96,7 +92,7 @@ preprocess_spectra <- function(data,
                                       SNR = ISlockMass_SNR)
            norm_fac <- getNormFactors(peaksdf = peak_df,
                                       speciesdf = NA, 
-                                      targetSpecies = IS_species, 
+                                      targetSpecies = IS_mass, 
                                       tol = IS_tol, 
                                       tolppm = tolppm, 
                                       allowNoMatch = allowNoMatch)

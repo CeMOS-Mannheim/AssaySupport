@@ -21,7 +21,7 @@
 #' norm_spec <- normalizeByFactor(test_spectra_proc, norm$norm_factor)
 #' plot(norm_spec[[1]], xlim = c(3000,4000))
 #' 
-#' @importFrom dplyr mutate arrange filter
+#' @importFrom dplyr mutate arrange filter group_by
 #' 
 #' @export
 
@@ -46,17 +46,25 @@ getNormFactors <- function(peaksdf, targetSpecies, tol, speciesdf = NA, tolppm =
     f_resdf <- resdf %>%
       filter(species == targetSpecies) %>%
       arrange(plotIdx)
+    cat("Using targetSpecies as a character isn't maintained anymore. Please provide mz.\n")
   } else {
     if(tolppm) {
       resdf <- peaksdf %>%
-        mutate(match = ifelse(mz > targetSpecies - mz*(tol/1e6) & mz < targetSpecies + mz*(tol/1e6), TRUE, FALSE)) 
+        mutate(match = ifelse(mz > targetSpecies - mz*(tol/1e6) 
+                              & mz < targetSpecies + mz*(tol/1e6), 
+                              TRUE, FALSE)) 
       f_resdf <- resdf %>%
         filter(match) %>%
+        group_by(plotIdx) %>%
+        # make sure that only the best fitting hit is kept
+        filter(abs(mz - targetSpecies) == min(abs(mz - targetSpecies))) %>% 
         arrange(plotIdx)
     } else {
       resdf <- peaksdf %>%
         mutate(match = mz > targetSpecies - tol & mz < targetSpecies + tol) 
       f_resdf <- resdf %>%
+        # make sure that only the best fitting hit is kept
+        filter(abs(mz - targetSpecies) == min(abs(mz - targetSpecies))) %>% 
         filter(match) %>%
         arrange(plotIdx)
     }

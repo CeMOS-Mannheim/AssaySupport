@@ -4,7 +4,7 @@
 #' @param ID          Character, name (ID) of spectra.
 #' @param plotIdx     Numeric, index in list of spectra.
 #' 
-#' @importFrom MALDIquant isMassPeaks isMassSpectrum isMassSpectrumOnDisk mass intensity
+#' @importFrom MALDIquant isMassPeaks isMassSpectrum mass intensity
 #'
 #' @return
 #'
@@ -20,7 +20,7 @@
                          int = intensity(spec), 
                          SNR = snr(spec),
                          type = "peak")
-  } else if (isMassSpectrum(spec) || isMassSpectrumOnDisk(spec)) {
+  } else if (isMassSpectrum(spec)) {
     df <- tibble::tibble(ID = ID, 
                          plotIdx = plotIdx,
                          peakIdx = NA,

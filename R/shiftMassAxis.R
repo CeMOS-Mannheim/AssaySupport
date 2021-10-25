@@ -5,6 +5,7 @@
 #'
 #' @return
 #' MALDIquant::MassSpectrum or MALDIquant::MassPeaks with shifted mass axis
+#' @importFrom MALDIquant isMassSpectrumList isMassPeaksList
 #' @export
 shiftMassAxis <- function(spec, mzdiff) {
   if(isMassSpectrum(spec) || isMassPeaks(spec)) {

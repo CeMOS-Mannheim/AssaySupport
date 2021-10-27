@@ -9,3 +9,7 @@ Encoding: UTF-8
 LazyData: true
 Imports: tidyverse, MALDIquant, MALDIquantForeign, dplyr, magrittr, svMisc, xml2, ggplot2, ggpubr, tibble, tidyr, openxlsx, OrgMassSpecR, ggrepel
 RoxygenNote: 7.1.1
+Suggests: 
+    rmarkdown,
+    knitr
+VignetteBuilder: knitr

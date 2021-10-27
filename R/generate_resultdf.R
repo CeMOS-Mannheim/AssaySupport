@@ -58,8 +58,10 @@ generate_resultdf <- function(peak_df,
                     into = separateIdInto, 
                     sep = sep)
   
-  if(!any(speciesdf[,subsetcol] %in% peak_df[,subsetcol])) {
-    stop("No matching entries for subsetcol in peak_df and speciesdf.\n")
+  if(!all(speciesdf[,subsetcol] %in% peak_df[,subsetcol])) {
+    stop("Not all entries in peak_df[,subsetcol] were found in speciesdf[,subsetcol].\n",
+         "Entries in speciesdf: ", paste(unique(speciesdf[,subsetcol]), collapse = ", "), ".\n",
+         "Entries in peak_df: ", paste(unique(peak_df[,subsetcol]), collapse = ", "), ".")
   }
   
   Idx <- peak_df %>%

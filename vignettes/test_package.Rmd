@@ -1,0 +1,51 @@
+---
+title: "Test Package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Test Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+# Information
+
+This vignette is testing some specific behavior of this package.
+
+```{r setup}
+library(AssaySupport)
+library(MALDIquant)
+```
+
+We will be using the included test data.
+Note that this data is from a RapiFlex in linear positive mode. So the resolution is low and the baseline is quite extreme.
+```{r load data}
+data("test_spectra")
+plot(test_spectra[[1]])
+```
+Next we will preprocess the spectra. 
+The included spectra don't actually include an internal standard so we will try to calibrate to an endogenous peak.
+```{r preprocess}
+prc_IS <- preprocess_spectra(data = test_spectra, 
+                              norm_meth = "IS", lockMass = 1807.7, lockMass_tol = 500)
+plot(prc_IS[[1]])
+```
+
+Next we detect the peaks and convert them to a data.frame.
+```{r peakPicking}
+peaks <- detectPeaks(prc_IS, method = "SuperSmoother", SNR = 3)
+names(peaks) <- names(prc_IS)
+peaksdf <- generate_peakdf(peaks)
+```
+
+Now we assign IDs to the found masses.
+```{r assignIDs}
+
+resdf <- generate_resultdf(peak_df = peaksdf, tol = 500, speciesdf = C99T_commonSpecies)
+
+```

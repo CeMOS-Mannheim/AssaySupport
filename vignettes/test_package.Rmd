@@ -43,9 +43,10 @@ names(peaks) <- names(prc_IS)
 peaksdf <- generate_peakdf(peaks)
 ```
 
-Now we assign IDs to the found masses.
+Now we assign IDs to the found masses and plot a product profile plot to see the changes.
 ```{r assignIDs}
 
-resdf <- generate_resultdf(peak_df = peaksdf, tol = 500, speciesdf = C99T_commonSpecies)
+resdf <- generate_resultdf(peak_df = peaksdf, tol = 500, speciesdf = C99_full)
+profilePlot(resultdf = resdf, filter = "IS|Ox|pE|P|NO", group_var = Condition, show_legend = FALSE)
 
 ```

@@ -58,7 +58,7 @@ generate_resultdf <- function(peak_df,
                     into = separateIdInto, 
                     sep = sep)
   
-  if(!all(speciesdf[,subsetcol] %in% peak_df[,subsetcol])) {
+  if(!all(peak_df[,subsetcol] %in% speciesdf[,subsetcol])) {
     stop("Not all entries in peak_df[,subsetcol] were found in speciesdf[,subsetcol].\n",
          "Entries in speciesdf: ", paste(unique(speciesdf[,subsetcol]), collapse = ", "), ".\n",
          "Entries in peak_df: ", paste(unique(peak_df[,subsetcol]), collapse = ", "), ".")
